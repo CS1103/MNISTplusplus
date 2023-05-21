@@ -1,0 +1,20 @@
+name: google-test
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone submodules
+        run: git submodule init && git submodule update
+      - name: Install gtest manually
+        run: sudo cmake CMakeLists.txt && sudo make install
+      - name: configure
+        run: mkdir build && cd build && cmake ..
+      - name: make
+        run: cd build && make
+      - name: Run Test
+        run: cd build && ctest -C "$env:BUILD_TYPE" -VV
