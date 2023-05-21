@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Clone submodules
         run: git submodule init && git submodule update
       - name: Install gtest manually
