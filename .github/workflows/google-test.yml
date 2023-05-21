@@ -19,4 +19,4 @@ jobs:
       - name: make
         run: sudo make
       - name: Run Test
-        run: ctest -C "$env:BUILD_TYPE" -VV
+        run: ls && ctest
