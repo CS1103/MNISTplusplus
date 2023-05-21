@@ -15,6 +15,7 @@ add_executable(hello_world
         src/mnist_loader.cpp
         src/neural_layer.cpp
         src/neural_network.cpp
+        src/constants.cpp
         test/init/hello_world.cpp)
 
 add_executable(mnistReader
@@ -29,7 +30,8 @@ add_executable(mnistReader
         src/neural_layer.cpp
         src/neural_network.cpp
         src/DigitImage.cpp
+        src/constants.cpp
         test/MNISTReader/test_reader.cpp
-        )
+        src/constants.cpp)
 
 add_subdirectory(Google_tests)

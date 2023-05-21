@@ -1,7 +1,8 @@
 #ifndef MNISTPLUSPLUS_CONSTANTS_H
 #define MNISTPLUSPLUS_CONSTANTS_H
 
+#include <string>
+enum read{MN_LABEL = 2049 , MN_IMG = 2051, TEST_NUM=10000,TRAIN_NUM = 60000};
 
-enum read{mn_label = 2049 , mn_img = 2051, test_num=10000,train_num = 60000};
-
+extern std::string TRAIN_IMAGE_PATH;
 #endif //MNISTPLUSPLUS_CONSTANTS_H

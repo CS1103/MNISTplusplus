@@ -9,7 +9,6 @@
 #ifndef MNISTPLUSPLUS_MNIST_LOADER_H
 #define MNISTPLUSPLUS_MNIST_LOADER_H
 
-
 class MNISTReader {
 public:
     using v_images = std::vector<DigitImage> ;
@@ -23,7 +22,7 @@ public:
 
         if (images_file.is_open() && labelsFile.is_open()) {
             #include "constants.h"
-            int magic_num, num_rows, num_cols, num_image = read::train_num;
+            int magic_num, num_rows, num_cols, num_image = read::TRAIN_NUM;
 
             images_file.read(reinterpret_cast<char *>(&magic_num), sizeof(magic_num));
             images_file.read(reinterpret_cast<char *>(&num_image), sizeof(num_image));
@@ -37,7 +36,7 @@ public:
             num_cols = __builtin_bswap32(num_cols);
 
 
-            if (magic_num !=read::mn_img) throw std::invalid_argument("Magic number mismatch, expected 2051");
+            if (magic_num !=read::MN_IMG) throw std::invalid_argument("Magic number mismatch, expected 2051");
 
             int label_magic_number, num_labels;
             labelsFile.read(reinterpret_cast<char *>(&label_magic_number), sizeof(label_magic_number));
@@ -45,7 +44,7 @@ public:
 
             label_magic_number = __builtin_bswap32(label_magic_number);
             num_labels = __builtin_bswap32(num_labels);
-            if (label_magic_number != read::mn_label) throw std::invalid_argument("Magic number mismatch, expected 2049");
+            if (label_magic_number != read::MN_LABEL) throw std::invalid_argument("Magic number mismatch, expected 2049");
 
             for (int i = 0; i < num_image; ++i) {
                 std::vector<float> img(num_rows * num_cols);
@@ -71,7 +70,7 @@ public:
         std::ifstream labels_file(label_path, std::ios::binary);
 
         if (images_file.is_open() && labels_file.is_open()) {
-            int magic_num, num_rows, num_cols, num_image = read::train_num;
+            int magic_num, num_rows, num_cols, num_image = read::TRAIN_NUM;
 
             images_file.read(reinterpret_cast<char *>(&magic_num), sizeof(magic_num));
             images_file.read(reinterpret_cast<char *>(&num_image), sizeof(num_image));
@@ -84,7 +83,7 @@ public:
             num_cols = __builtin_bswap32(num_cols);
 
 
-            if (magic_num != read::mn_img) throw std::invalid_argument("Test images magic number mismatch, expected 2051");
+            if (magic_num != read::MN_IMG) throw std::invalid_argument("Test images magic number mismatch, expected 2051");
 
             int label_magic_number, num_labels;
             labels_file.read(reinterpret_cast<char *>(&label_magic_number), sizeof(label_magic_number));
@@ -93,7 +92,7 @@ public:
             label_magic_number = __builtin_bswap32(label_magic_number);
             num_labels = __builtin_bswap32(num_labels);
 
-            if (label_magic_number != read::mn_label) throw std::invalid_argument("Test labels  magic number mismatch, expected 2049");
+            if (label_magic_number != read::MN_LABEL) throw std::invalid_argument("Test labels  magic number mismatch, expected 2049");
             for (int i = 0; i < num_image; ++i) {
                 std::vector<float> img(num_rows * num_cols);
 
