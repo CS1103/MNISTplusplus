@@ -8,5 +8,5 @@ TEST(HelloWorldTest, PrintHello) {
     testing::internal::CaptureStdout();
     printHello();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Hello, World!\n");
+    EXPECT_EQ(output, "Hello, Worl!\n");
 }
