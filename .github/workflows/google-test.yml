@@ -15,8 +15,8 @@ jobs:
       - name: Install gtest manually
         run: sudo cmake CMakeLists.txt && sudo make install
       - name: configure
-        run: mkdir build && cd build && sudo cmake ..
+        run: sudo cmake .. --target Google_Tests_run
       - name: make
         run: sudo make
       - name: Run Test
-        run: ls build && ctest
+        run: ctest
