@@ -239,8 +239,20 @@ public:
         }
         return Proxy(data[row], cols);
     }
+    friend std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix);
+
 };
 
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix) {
+    for (int i = 0; i < matrix.rows; ++i) {
+        for (int j = 0; j < matrix.cols; ++j) {
+            os << matrix.datos[i][j] << ' ';
+        }
+        os << '\n';
+    }
+    return os;
+}
 
 
 
