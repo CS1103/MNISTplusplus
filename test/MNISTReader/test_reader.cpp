@@ -14,13 +14,13 @@ int main() {
 
     std::cout << "\nLoad train images test\n";
     for(int i = 0; i<10 ; ++i){
-        int idx = rand()%read::train_num +1;
+        int idx = rand()%read::TRAIN_NUM + 1;
         std::cout << trainImages[idx];
     }
 
     std::cout << "\nLoad test images test\n";
     for(int i = 0; i<10 ; ++i){
-        int idx = rand()%read::test_num+1;
+        int idx = rand()%read::TEST_NUM + 1;
         std::cout << testImages[idx];
     }
     return 0;
