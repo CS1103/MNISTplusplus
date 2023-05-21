@@ -1,0 +1,8 @@
+//
+// Created by Roger Huauya on 20/05/23.
+//
+
+#ifndef MNISTPLUSPLUS_CONSTANTS_H
+#define MNISTPLUSPLUS_CONSTANTS_H
+
+#endif //MNISTPLUSPLUS_CONSTANTS_H
