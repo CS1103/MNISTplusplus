@@ -19,4 +19,4 @@ jobs:
       - name: make
         run: sudo make
       - name: Run Test
-        run: ls && ctest
+        run: ls build && ctest
