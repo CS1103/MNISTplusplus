@@ -16,3 +16,4 @@ add_executable(hello_world
         src/neural_layer.cpp
         src/neural_network.cpp
         test/init/hello_world.cpp)
+add_subdirectory(Google_tests)

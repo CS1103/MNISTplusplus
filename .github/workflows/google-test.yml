@@ -1,0 +1,22 @@
+name: google-test
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Clone submodules
+        run: git submodule init && git submodule update
+      - name: Install gtest manually
+        run: sudo cmake CMakeLists.txt && sudo make install
+      - name: configure
+        run: sudo cmake .
+      - name: make
+        run: sudo make
+      - name: Run Test
+        run: cd Google_tests && ./Google_Tests_run
