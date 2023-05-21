@@ -27,6 +27,7 @@ add_executable(mnistReader
         src/mnist_loader.cpp
         src/neural_layer.cpp
         src/neural_network.cpp
+        include/DigitImage.h
         test/MNISTReader/test_reader.cpp
         )
 
