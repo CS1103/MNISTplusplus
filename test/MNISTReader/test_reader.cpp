@@ -1,4 +1,5 @@
 #include "../../include/mnist_loader.h"
+#include "constants.h"
 #include <iostream>
 #include <time.h>
 
@@ -6,8 +7,8 @@ int main() {
     srand(time(0));
 
     MNISTReader dataset;
-    dataset.loadTrainDataset("../data/train-images.idx3-ubyte","../Data/train-labels.idx1-ubyte" );
-    dataset.loadTestDataset("../data/t10k-images.idx3-ubyte","../Data/t10k-labels.idx1-ubyte" );
+    dataset.loadTrainDataset(TRAIN_IMAGE_PATH, TRAIN_LABEL_PATH);
+    dataset.loadTestDataset(TEST_IMAGE_PATH,TEST_LABEL_PATH);
 
     auto trainImages = dataset.getTrainImg();
     auto testImages = dataset.getTestImg();
