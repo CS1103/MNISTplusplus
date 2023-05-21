@@ -17,6 +17,6 @@ jobs:
       - name: configure
         run: mkdir build && cd build && sudo cmake ..
       - name: make
-        run: make
+        run: sudo make
       - name: Run Test
         run: cd build && ctest -C "$env:BUILD_TYPE" -VV
