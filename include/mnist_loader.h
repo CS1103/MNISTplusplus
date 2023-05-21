@@ -4,6 +4,7 @@
 #include <bit>
 #include <iostream>
 #include <fstream>
+#include "constants.h"
 
 #ifndef MNISTPLUSPLUS_MNIST_LOADER_H
 #define MNISTPLUSPLUS_MNIST_LOADER_H
@@ -15,112 +16,107 @@ public:
 
     MNISTReader()=default;
 
-    void loadTrainDataset(const std::string& imgPath, const std::string& labelPath) {
+    void loadTrainDataset(const std::string& img_path, const std::string& label_path) {
 
-        std::ifstream imagesFile(imgPath, std::ios::binary);
-        std::ifstream labelsFile(labelPath, std::ios::binary);
+        std::ifstream images_file(img_path, std::ios::binary);
+        std::ifstream labelsFile(label_path, std::ios::binary);
 
-        if (imagesFile.is_open() && labelsFile.is_open()) {
-            int magicNum, numRows, numCols, numImage = 60000;
+        if (images_file.is_open() && labelsFile.is_open()) {
+            #include "constants.h"
+            int magic_num, num_rows, num_cols, num_image = read::train_num;
 
-            imagesFile.read(reinterpret_cast<char *>(&magicNum), sizeof(magicNum));
-            imagesFile.read(reinterpret_cast<char *>(&numImage), sizeof(numImage));
-            imagesFile.read(reinterpret_cast<char *>(&numRows), sizeof(numRows));
-            imagesFile.read(reinterpret_cast<char *>(&numCols), sizeof(numCols));
-
-
-            magicNum = __builtin_bswap32(magicNum);
-            numImage = __builtin_bswap32(numImage);
-            numRows = __builtin_bswap32(numRows);
-            numCols = __builtin_bswap32(numCols);
+            images_file.read(reinterpret_cast<char *>(&magic_num), sizeof(magic_num));
+            images_file.read(reinterpret_cast<char *>(&num_image), sizeof(num_image));
+            images_file.read(reinterpret_cast<char *>(&num_rows), sizeof(num_rows));
+            images_file.read(reinterpret_cast<char *>(&num_cols), sizeof(num_cols));
 
 
-            if (magicNum != 2051) throw std::invalid_argument("Magic number mismatch, expected 2051");
+            magic_num = __builtin_bswap32(magic_num);
+            num_image = __builtin_bswap32(num_image);
+            num_rows = __builtin_bswap32(num_rows);
+            num_cols = __builtin_bswap32(num_cols);
 
-            int labelMagicNumber, numLabels;
-            labelsFile.read(reinterpret_cast<char *>(&labelMagicNumber), sizeof(labelMagicNumber));
-            labelsFile.read(reinterpret_cast<char *>(&numLabels), sizeof(numLabels));
 
-            labelMagicNumber = __builtin_bswap32(labelMagicNumber);
-            numLabels = __builtin_bswap32(numLabels);
-            if (labelMagicNumber != 2049) throw std::invalid_argument("Magic number mismatch, expected 2049");
+            if (magic_num !=read::mn_img) throw std::invalid_argument("Magic number mismatch, expected 2051");
 
-            for (int i = 0; i < numImage; ++i) {
-                std::vector<float> img(numRows * numCols);
+            int label_magic_number, num_labels;
+            labelsFile.read(reinterpret_cast<char *>(&label_magic_number), sizeof(label_magic_number));
+            labelsFile.read(reinterpret_cast<char *>(&num_labels), sizeof(num_labels));
 
-                for (int pixel = 0; pixel < numRows * numCols; ++pixel) {
-                    unsigned char pixelValue;
-                    imagesFile.read(reinterpret_cast<char *>(&pixelValue), sizeof(pixelValue));
-                    img[pixel] = static_cast<float>(pixelValue) / 255.0f;
+            label_magic_number = __builtin_bswap32(label_magic_number);
+            num_labels = __builtin_bswap32(num_labels);
+            if (label_magic_number != read::mn_label) throw std::invalid_argument("Magic number mismatch, expected 2049");
+
+            for (int i = 0; i < num_image; ++i) {
+                std::vector<float> img(num_rows * num_cols);
+
+                for (int pixel = 0; pixel < num_rows * num_cols; ++pixel) {
+                    unsigned char pixel_value;
+                    images_file.read(reinterpret_cast<char *>(&pixel_value), sizeof(pixel_value));
+                    img[pixel] = static_cast<float>(pixel_value) / 255.0f;
                 }
 
                 unsigned char label;
                 labelsFile.read(reinterpret_cast<char *>(&label), sizeof(label));
-                DigitImage new_img(numRows, numCols, label, img);
-                trainImages.push_back(new_img);
+                DigitImage new_img(num_rows, num_cols, label, img);
+                train_images.push_back(new_img);
             }
-            imagesFile.close();
+            images_file.close();
             labelsFile.close();
         }else throw std::runtime_error("Invalid files or filepaths");
     }
 
-    void loadTestDataset(const std::string& imgPath, const std::string& labelPath){
-        std::ifstream imagesFile(imgPath, std::ios::binary);
-        std::ifstream labelsFile(labelPath, std::ios::binary);
+    void loadTestDataset(const std::string& img_path, const std::string& label_path){
+        std::ifstream images_file(img_path, std::ios::binary);
+        std::ifstream labels_file(label_path, std::ios::binary);
 
-        if (imagesFile.is_open() && labelsFile.is_open()) {
-            int magicNum, numRows, numCols, numImage = 10000;
+        if (images_file.is_open() && labels_file.is_open()) {
+            int magic_num, num_rows, num_cols, num_image = read::train_num;
 
-            imagesFile.read(reinterpret_cast<char *>(&magicNum), sizeof(magicNum));
-            imagesFile.read(reinterpret_cast<char *>(&numImage), sizeof(numImage));
-            imagesFile.read(reinterpret_cast<char *>(&numRows), sizeof(numRows));
-            imagesFile.read(reinterpret_cast<char *>(&numCols), sizeof(numCols));
+            images_file.read(reinterpret_cast<char *>(&magic_num), sizeof(magic_num));
+            images_file.read(reinterpret_cast<char *>(&num_image), sizeof(num_image));
+            images_file.read(reinterpret_cast<char *>(&num_rows), sizeof(num_rows));
+            images_file.read(reinterpret_cast<char *>(&num_cols), sizeof(num_cols));
 
-            magicNum = __builtin_bswap32(magicNum);
-            numImage = __builtin_bswap32(numImage);
-            numRows = __builtin_bswap32(numRows);
-            numCols = __builtin_bswap32(numCols);
+            magic_num = __builtin_bswap32(magic_num);
+            num_image = __builtin_bswap32(num_image);
+            num_rows = __builtin_bswap32(num_rows);
+            num_cols = __builtin_bswap32(num_cols);
 
 
-            if (magicNum != 2051) throw std::invalid_argument("Test images magic number mismatch, expected 2051");
+            if (magic_num != read::mn_img) throw std::invalid_argument("Test images magic number mismatch, expected 2051");
 
-            int labelMagicNumber, numLabels;
-            labelsFile.read(reinterpret_cast<char *>(&labelMagicNumber), sizeof(labelMagicNumber));
-            labelsFile.read(reinterpret_cast<char *>(&numLabels), sizeof(numLabels));
+            int label_magic_number, num_labels;
+            labels_file.read(reinterpret_cast<char *>(&label_magic_number), sizeof(label_magic_number));
+            labels_file.read(reinterpret_cast<char *>(&num_labels), sizeof(num_labels));
 
-            labelMagicNumber = __builtin_bswap32(labelMagicNumber);
-            numLabels = __builtin_bswap32(numLabels);
+            label_magic_number = __builtin_bswap32(label_magic_number);
+            num_labels = __builtin_bswap32(num_labels);
 
-            if (labelMagicNumber != 2049) throw std::invalid_argument("Test labels  magic number mismatch, expected 2049");
-            for (int i = 0; i < numImage; ++i) {
-                std::vector<float> img(numRows * numCols);
+            if (label_magic_number != read::mn_label) throw std::invalid_argument("Test labels  magic number mismatch, expected 2049");
+            for (int i = 0; i < num_image; ++i) {
+                std::vector<float> img(num_rows * num_cols);
 
-                for (int pixel = 0; pixel < numRows * numCols; ++pixel) {
-                    unsigned char pixelValue;
-                    imagesFile.read(reinterpret_cast<char *>(&pixelValue), sizeof(pixelValue));
-                    img[pixel] = static_cast<float>(pixelValue) / 255.0f;
+                for (int pixel = 0; pixel < num_rows * num_cols; ++pixel) {
+                    unsigned char pixel_value;
+                    images_file.read(reinterpret_cast<char *>(&pixel_value), sizeof(pixel_value));
+                    img[pixel] = static_cast<float>(pixel_value) / 255.0f;
                 }
 
                 unsigned char label;
-                labelsFile.read(reinterpret_cast<char *>(&label), sizeof(label));
-                DigitImage new_img(numRows, numCols, label, img);
-                testImages.push_back(new_img);
+                labels_file.read(reinterpret_cast<char *>(&label), sizeof(label));
+                DigitImage new_img(num_rows, num_cols, label, img);
+                test_images.push_back(new_img);
             }
         }
     }
 
-    v_images getTrainImg() const {return trainImages;}
-    v_images getTestImg()  const {return testImages;}
+    v_images getTrainImg() const {return train_images;}
+    v_images getTestImg()  const {return test_images;}
 
-
-    /*friend std::ostream& operator<<(std::ostream& o, const MNISTReader& reader){
-        for(int i = 0; i <5 ; i++){
-            std::cout << reader.trainImages[i];
-        }
-    }*/
 private:
-    v_images trainImages ;
-    v_images testImages;
+    v_images train_images ;
+    v_images test_images;
 };
 
 

@@ -1,7 +1,3 @@
-//
-// Created by razor on 20/05/2023.
-//
-
 #include <vector>
 #include <iostream>
 #include <iomanip>
