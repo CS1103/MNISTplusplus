@@ -85,6 +85,12 @@ void test_operator_multiply_equals() {
     }
 }
 
+void test_matrix_transpose(){
+    Matrix<int> m1({{1, 2, 3}, {4, 5, 6}});
+    Matrix<int> m2 = m1.T();
+    cout << m2;
+}
+
 int main(){
 
     std::cout << "Iniciando pruebas...\n";

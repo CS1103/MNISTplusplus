@@ -217,6 +217,16 @@ public:
         return *this;
     }
 
+    Matrix<T> T() const {
+        Matrix<T> result(cols, rows);
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                result(i, j) = data[j][i];
+            }
+        }
+        return result;
+    }
+
     class Proxy {
     private:
         T* rowData;
