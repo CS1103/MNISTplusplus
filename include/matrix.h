@@ -217,7 +217,7 @@ public:
         return *this;
     }
 
-    Matrix<T> T() const {
+    Matrix<T> t() const {
         Matrix<T> result(cols, rows);
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
@@ -249,15 +249,16 @@ public:
         }
         return Proxy(data[row], cols);
     }
-    friend std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix);
+    template <typename U>
+    friend std::ostream &operator<<(std::ostream &os, const Matrix<U> &matrix);
 
 };
 
-template <typename T>
-std::ostream &operator<<(std::ostream &os, const Matrix<T> &matrix) {
+template <typename U>
+std::ostream &operator<<(std::ostream &os, const Matrix<U> &matrix) {
     for (int i = 0; i < matrix.rows; ++i) {
         for (int j = 0; j < matrix.cols; ++j) {
-            os << matrix.datos[i][j] << ' ';
+            os << matrix(i,j) << ' ';
         }
         os << '\n';
     }
