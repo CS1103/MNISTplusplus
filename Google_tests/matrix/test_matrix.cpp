@@ -127,10 +127,22 @@ TEST(MatrixTransposeTest, Transpose){
     Matrix<int> m1({{1, 2, 3}, {4, 5, 6}});
     m1 = m1.t();
     EXPECT_EQ(m1(0,0),1);
+    EXPECT_EQ(m1(0,1),4);
+    EXPECT_EQ(m1(1,0),2);
     EXPECT_EQ(m1(1,1),5);
+    EXPECT_EQ(m1(2,0),3);
+    EXPECT_EQ(m1(2,1),6);
+    EXPECT_EQ(m1.shape(), std::make_pair(3,2));
+
     Matrix<double> m2({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}});
     m2 = m2.t();
-    EXPECT_EQ(m2(0,0), 1.0);
-    EXPECT_EQ(m2(1,1), 5.0);
+    EXPECT_EQ(m2(0,0),1.0);
+    EXPECT_EQ(m2(0,1),4.0);
+    EXPECT_EQ(m2(1,0),2.0);
+    EXPECT_EQ(m2(1,1),5.0);
+    EXPECT_EQ(m2(2,0),3.0);
+    EXPECT_EQ(m2(2,1),6.0);
+    EXPECT_EQ(m2.shape(), std::make_pair(3,2));
+
 }
 
