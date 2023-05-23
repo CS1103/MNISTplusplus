@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <utility>
 using namespace std;
 
 template <typename T>
@@ -229,6 +230,8 @@ public:
         }
         return result;
     }
+
+    std::pair<int,int> shape() const{return {rows, cols};}
 
     class Proxy {
     private:
