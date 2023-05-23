@@ -146,3 +146,14 @@ TEST(MatrixTransposeTest, Transpose){
 
 }
 
+TEST(MatrixShapeTest, Shape){
+    Matrix<int> m1({{1, 2, 3}, {4, 5, 6}});
+    Matrix<double> m2({{1.0, 2.0, 3.0, 5.0, 6.0}, {4.0, 5.0, 6.0, 7.0, 8.0}});
+    Matrix<double> m3(5,1);
+    Matrix<double> m4(m2);
+
+    EXPECT_EQ(m1.shape(), std::make_pair(2,3));
+    EXPECT_EQ(m2.shape(), std::make_pair(2,5));
+    EXPECT_EQ(m3.shape(), std::make_pair(5,1));
+    EXPECT_EQ(m4.shape(), std::make_pair(2,5));
+}
