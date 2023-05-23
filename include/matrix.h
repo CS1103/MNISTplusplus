@@ -17,6 +17,9 @@ public:
         data = new T*[rows];
         for (int i = 0; i < rows; i++) {
             data[i] = new T[cols];
+            for(int j = 0; j < cols; j++){
+                data[i][j] = 0;
+            }
         }
     }
 
