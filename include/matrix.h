@@ -3,7 +3,10 @@
 
 
 #include <iostream>
-#include <utility>
+//#include <utility>
+#include <random>
+#include <type_traits>
+#include "constants.h"
 using namespace std;
 
 template <typename T>
@@ -221,6 +224,8 @@ public:
         return *this;
     }
 
+
+
     Matrix<T> t() const {
         Matrix<T> result(cols, rows);
         for (int i = 0; i < cols; i++) {
@@ -232,6 +237,31 @@ public:
     }
 
     std::pair<int,int> shape() const{return {rows, cols};}
+
+    Matrix& randomValues(int seed){
+
+        //pseudo-random number generator using merssene twister algorithm and a specific seed
+        std::mt19937 gen(seed);
+
+        if constexpr(std::is_same<T,int>::value){
+            //defines an integer number uniform distribution in a specific range
+            std::uniform_int_distribution<int> distribution(0, 1);
+            for (size_t i = 0; i < rows; ++i) {
+                for (size_t j = 0; j < cols; ++j) {
+                    data[i][j] = distribution(gen);
+                }
+            }
+        }else{
+            //defines a real number uniform distribution in a specific range
+            std::uniform_real_distribution<float> distribution(0.0, 1.0);
+            for (size_t i = 0; i < rows; ++i) {
+                for (size_t j = 0; j < cols; ++j) {
+                    data[i][j] = distribution(gen);
+                }
+            }
+        }
+        return *this;
+    }
 
     class Proxy {
     private:
@@ -255,8 +285,15 @@ public:
         }
         return Proxy(data[row], cols);
     }
+
     template <typename U>
     friend std::ostream &operator<<(std::ostream &os, const Matrix<U> &matrix);
+
+    template <typename A, typename B>
+    friend bool operator == (const Matrix<A>& m1, const Matrix<B>& m2);
+
+    template <typename A, typename B>
+    friend bool operator != (const Matrix<A>& m1, const Matrix<B>& m2);
 
 };
 
@@ -271,6 +308,31 @@ std::ostream &operator<<(std::ostream &os, const Matrix<U> &matrix) {
     return os;
 }
 
+template <typename A, typename B>
+bool operator == (const Matrix<A>& m1, const Matrix<B>& m2){
+    if constexpr(!std::is_same<A,B>::value) return false;
+    if (m1.rows!= m2.rows || m1.cols!=m2.cols) return false;
+    for(int i = 0;i<m1.rows;i++){
+        for(int j = 0; j<m1.cols ; j++){
+            if (m1.data[i][j] != m2.data[i][j]) return false;
+        }
+    }
+    return true;
+}
+
+template <typename A, typename B>
+bool operator != (const Matrix<A>& m1, const Matrix<B>& m2){
+    if constexpr(!std::is_same<A,B>::value) return true;
+    if (m1.rows!= m2.rows || m1.cols!=m2.cols) return true;
+    for(int i = 0;i<m1.rows;i++){
+        for(int j = 0; j<m1.cols ; j++){
+            if (m1.data(i,j) != m2.data(i,j)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 
 #endif //MNISTPLUSPLUS_MATRIX_H

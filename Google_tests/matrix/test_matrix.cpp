@@ -157,3 +157,58 @@ TEST(MatrixShapeTest, Shape){
     EXPECT_EQ(m3.shape(), std::make_pair(5,1));
     EXPECT_EQ(m4.shape(), std::make_pair(2,5));
 }
+
+TEST(RandomMatrix ,ReplicableRandomness){
+    float seed_123[36] = {
+            0.696469188, 0.712955296, 0.286139339, 0.428470939, 0.226851448, 0.690884829,
+            0.551314771, 0.719150305, 0.719468951, 0.491118938, 0.423106462, 0.780027747,
+            0.98076421, 0.410924375, 0.684829712, 0.579694271, 0.480931908, 0.139950767,
+            0.39211753, 0.401017547, 0.343178004, 0.627317011, 0.729049683, 0.32415089,
+            0.438572258, 0.244759277, 0.0596778989, 0.694755197, 0.398044258, 0.593902409,
+            0.737995386, 0.631792009, 0.182491735, 0.440257192, 0.175451756, 0.0837264881
+    };
+
+    int seed_42[36]={
+            0, 1, 1, 0, 1, 1,
+            1, 1, 0, 0, 0, 0,
+            0, 0, 1, 0, 1, 0,
+            1, 1, 0, 0, 1, 1,
+            1, 1, 0, 0, 0, 1,
+            0, 1, 0, 1, 1, 0
+    };
+
+    Matrix<float> m1(3,3);
+    m1.randomValues(123);
+
+    Matrix<float> m2(3,3);
+    m2.randomValues(123);
+
+    Matrix<int> m3(4,3);
+    m3.randomValues(42);
+
+    Matrix<int> m4(4,3);
+    m4.randomValues(42);
+
+    EXPECT_EQ(m1(0,0), seed_123[0]);
+    EXPECT_EQ(m1(0,1), seed_123[1]);
+    EXPECT_EQ(m1(0,2), seed_123[2]);
+    EXPECT_EQ(m1(1,0), seed_123[3]);
+    EXPECT_EQ(m1(1,1), seed_123[4]);
+    EXPECT_EQ(m1(1,2), seed_123[5]);
+    EXPECT_EQ(m1(2,0), seed_123[6]);
+    EXPECT_EQ(m1(2,1), seed_123[7]);
+    EXPECT_EQ(m1(2,2), seed_123[8]);
+    EXPECT_EQ(m1, m2);
+
+    EXPECT_EQ(m3(0,0), seed_42[0]);
+    EXPECT_EQ(m3(0,1), seed_42[1]);
+    EXPECT_EQ(m3(0,2), seed_42[2]);
+    EXPECT_EQ(m3(1,0), seed_42[3]);
+    EXPECT_EQ(m3(1,1), seed_42[4]);
+    EXPECT_EQ(m3(1,2), seed_42[5]);
+    EXPECT_EQ(m3(2,0), seed_42[6]);
+    EXPECT_EQ(m3(2,1), seed_42[7]);
+    EXPECT_EQ(m3(2,2), seed_42[8]);
+    EXPECT_EQ(m3, m4);
+
+}
