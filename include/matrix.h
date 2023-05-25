@@ -16,7 +16,7 @@ private:
     size_t rows;
     size_t cols;
 public:
-    // Constructor 1
+
     Matrix(int rows, int cols) : rows(rows), cols(cols) {
         data = new T*[rows];
         for (int i = 0; i < rows; i++) {
@@ -98,7 +98,6 @@ public:
         return *this;
     }
 
-    // Destructor
     ~Matrix() {
         for (int i = 0; i < rows; i++) {
             delete[] data[i];
@@ -160,7 +159,8 @@ public:
         return result;
     }
 
-    Matrix operator*(T scalar) const {
+    template<typename U>
+    Matrix operator*(U scalar) const {
         Matrix result(rows, cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -169,6 +169,10 @@ public:
         }
         return result;
     }
+
+    template<typename A,typename B>
+    friend Matrix<A> operator*(B scalar, const Matrix<A>& matrix);
+
     Matrix& operator+=(const Matrix& other) {
         if (rows != other.rows || cols != other.cols) {
             throw std::runtime_error("Matrices must have the same size for += operation.");
@@ -224,13 +228,46 @@ public:
         return *this;
     }
 
-
-
-    Matrix<T> t() const {
-        Matrix<T> result(cols, rows);
+    Matrix t() const {
+        Matrix result(cols, rows);
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
                 result(i, j) = data[j][i];
+            }
+        }
+        return result;
+    }
+
+    Matrix& ones() {
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                *(*(data+i)+j) = static_cast<T>(1);
+            }
+        }
+        return *this;
+    }
+
+    Matrix& eye() {
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(i == j){
+                    *(*(data+i)+j) = static_cast<T>(1);
+                }else{
+                    *(*(data+i)+j) = static_cast<T>(0);
+                }
+            }
+        }
+        return *this;
+    }
+
+    Matrix slice(std::pair<T,T> rowRange, std::pair<T,T> colRange) {
+        if(rowRange.first < 0 || rowRange.second > rows || colRange.first < 0 || colRange.second > cols || rowRange.second - rowRange.first + 1 < 0 || colRange.second - colRange.first + 1 < 0){
+            throw std::runtime_error("Invalid slice range.");
+        }
+        Matrix result(rowRange.second - rowRange.first + 1, colRange.second - colRange.first + 1);
+        for(int i = rowRange.first; i <= rowRange.second; i++){
+            for(int j = colRange.first; j <= colRange.second; j++){
+                result(i - rowRange.first, j - colRange.first) = data[i][j];
             }
         }
         return result;
@@ -333,6 +370,19 @@ bool operator != (const Matrix<A>& m1, const Matrix<B>& m2){
     }
     return false;
 }
+
+template <typename A, typename B>
+Matrix<A> operator*(B scalar, const Matrix<A>& m){
+    Matrix<A> result(m.rows, m.cols);
+    for (int i = 0; i < m.rows; i++) {
+        for (int j = 0; j < m.cols; j++) {
+            result(i, j) = m.data[i][j] * scalar;
+        }
+    }
+    return result;
+}
+
+
 
 
 #endif //MNISTPLUSPLUS_MATRIX_H

@@ -71,13 +71,18 @@ TEST(MatrixOperatorMultiplyTest, OperatorMultiply){
 TEST(MatrixOperatorScalarMultiplyTest, OperatorScalarMultiply){
     Matrix<int> m1({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
     Matrix<int> m2 = m1 * 2;
+    Matrix<int> m3 = 2 * m1;
     EXPECT_EQ(m2(0,0),2);
     EXPECT_EQ(m2(1,1),10);
-    Matrix<double> m3({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}});
-    Matrix<double> m4 = m3 * 2.0;
-    EXPECT_EQ(m4(0,0), 2.0);
-    EXPECT_EQ(m4(1,1), 10.0);
-
+    EXPECT_EQ(m3(0,0),2);
+    EXPECT_EQ(m3(1,1),10);
+    Matrix<double> m4({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}});
+    Matrix<double> m5 = m4 * 2.0;
+    Matrix<double> m6 = 2.0 * m4;
+    EXPECT_EQ(m5(0,0), 2.0);
+    EXPECT_EQ(m5(1,1), 10.0);
+    EXPECT_EQ(m6(0,0), 2.0);
+    EXPECT_EQ(m6(1,1), 10.0);
 }
 
 TEST(MatrixOperatorPlusEqualsTest, OperatorPlusEquals){
@@ -122,6 +127,61 @@ TEST(MatrixOperatorMultiplyEqualsTest, OperatorMultiplyEquals){
 
 }
 
+TEST(MatrixFunctionEye, Eye){
+    Matrix<int> m1(3,3);
+    m1.eye();
+    EXPECT_EQ(m1(0,0),1);
+    EXPECT_EQ(m1(1,1),1);
+    EXPECT_EQ(m1(2,2),1);
+    EXPECT_EQ(m1(0,1),0);
+    EXPECT_EQ(m1(0,2),0);
+    EXPECT_EQ(m1(1,0),0);
+    EXPECT_EQ(m1(1,2),0);
+
+    Matrix<double> m2(3,3);
+    m2.eye();
+    EXPECT_EQ(m2(0,0),1.0);
+    EXPECT_EQ(m2(1,1),1.0);
+    EXPECT_EQ(m2(2,2),1.0);
+    EXPECT_EQ(m2(0,1),0.0);
+    EXPECT_EQ(m2(0,2),0.0);
+    EXPECT_EQ(m2(1,0),0.0);
+    EXPECT_EQ(m2(1,2),0.0);
+}
+
+TEST(MatrixFunctionOnes, Ones){
+    Matrix<int> m1(3,3);
+    m1.ones();
+    EXPECT_EQ(m1(0,0),1);
+    EXPECT_EQ(m1(1,1),1);
+    EXPECT_EQ(m1(2,2),1);
+    EXPECT_EQ(m1(0,1),1);
+    EXPECT_EQ(m1(0,2),1);
+    EXPECT_EQ(m1(1,0),1);
+    EXPECT_EQ(m1(1,2),1);
+    EXPECT_EQ(m1.shape(), std::make_pair(3,3));
+
+    Matrix<double> m2(3,3);
+    m2.ones();
+    EXPECT_EQ(m2(0,0),1.0);
+    EXPECT_EQ(m2(1,1),1.0);
+    EXPECT_EQ(m2(2,2),1.0);
+    EXPECT_EQ(m2(0,1),1.0);
+    EXPECT_EQ(m2(0,2),1.0);
+    EXPECT_EQ(m2(1,0),1.0);
+    EXPECT_EQ(m2(1,2),1.0);
+    EXPECT_EQ(m2.shape(), std::make_pair(3,3));
+}
+
+TEST(MatrixSliceTest, Slice){
+    Matrix<int> m1({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+    Matrix<int> m2 = m1.slice(std::pair(0,1),std::pair(0,1));
+    EXPECT_EQ(m2(0,0),1);
+    EXPECT_EQ(m2(0,1),2);
+    EXPECT_EQ(m2(1,0),4);
+    EXPECT_EQ(m2(1,1),5);
+    EXPECT_EQ(m2.shape(), std::make_pair(2,2));
+}
 
 TEST(MatrixTransposeTest, Transpose){
     Matrix<int> m1({{1, 2, 3}, {4, 5, 6}});
