@@ -129,24 +129,24 @@ TEST(MatrixOperatorMultiplyEqualsTest, OperatorMultiplyEquals){
 
 TEST(MatrixFunctionEye, Eye){
     Matrix<int> m1(3,3);
-    m1.eye();
-    EXPECT_EQ(m1(0,0),1);
-    EXPECT_EQ(m1(1,1),1);
-    EXPECT_EQ(m1(2,2),1);
-    EXPECT_EQ(m1(0,1),0);
-    EXPECT_EQ(m1(0,2),0);
-    EXPECT_EQ(m1(1,0),0);
-    EXPECT_EQ(m1(1,2),0);
+    Matrix<int> m2 = m1.eye();
+    EXPECT_EQ(m2(0,0),1);
+    EXPECT_EQ(m2(1,1),1);
+    EXPECT_EQ(m2(2,2),1);
+    EXPECT_EQ(m2(0,1),0);
+    EXPECT_EQ(m2(0,2),0);
+    EXPECT_EQ(m2(1,0),0);
+    EXPECT_EQ(m2(1,2),0);
 
-    Matrix<double> m2(3,3);
-    m2.eye();
-    EXPECT_EQ(m2(0,0),1.0);
-    EXPECT_EQ(m2(1,1),1.0);
-    EXPECT_EQ(m2(2,2),1.0);
-    EXPECT_EQ(m2(0,1),0.0);
-    EXPECT_EQ(m2(0,2),0.0);
-    EXPECT_EQ(m2(1,0),0.0);
-    EXPECT_EQ(m2(1,2),0.0);
+    Matrix<double> m3(3,3);
+    Matrix<double> m4 = m3.eye();
+    EXPECT_EQ(m4(0,0),1.0);
+    EXPECT_EQ(m4(1,1),1.0);
+    EXPECT_EQ(m4(2,2),1.0);
+    EXPECT_EQ(m4(0,1),0.0);
+    EXPECT_EQ(m4(0,2),0.0);
+    EXPECT_EQ(m4(1,0),0.0);
+    EXPECT_EQ(m4(1,2),0.0);
 }
 
 TEST(MatrixFunctionOnes, Ones){
