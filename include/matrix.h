@@ -246,17 +246,18 @@ public:
         return *this;
     }
 
-    Matrix& eye() {
+    Matrix eye() {
+        Matrix result(rows, cols);
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
                 if(i == j){
-                    *(*(data+i)+j) = static_cast<T>(1);
+                    result(i,j) = static_cast<T>(1);
                 }else{
-                    *(*(data+i)+j) = static_cast<T>(0);
+                    result(i,j) = static_cast<T>(0);
                 }
             }
         }
-        return *this;
+        return result;
     }
 
     Matrix slice(std::pair<T,T> rowRange, std::pair<T,T> colRange) {
