@@ -9,7 +9,7 @@ extern std::string TRAIN_LABEL_PATH;
 extern std::string TEST_IMAGE_PATH;
 extern std::string TEST_LABEL_PATH;
 
-extern float random_lower_limit;
-extern float random_upper_limit;
+extern float RANDOM_LOWER_LIMIT;
+extern float RANDOM_UPPER_LIMIT;
 
 #endif //MNISTPLUSPLUS_CONSTANTS_H
