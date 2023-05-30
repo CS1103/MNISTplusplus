@@ -227,6 +227,35 @@ public:
         return *this;
     }
 
+    void serialize(std::ostream &output) const{
+        output.write((char*)&rows, sizeof(rows));
+        output.write((char*)&cols, sizeof(cols));
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                output.write((char*)&data[i][j], sizeof(T));
+            }
+        }
+    }
+
+    void deserialize(std::istream &input) {
+        for(int i=0; i<rows; i++)
+            delete [] data[i];
+        delete [] data;
+
+        input.read((char*)&rows, sizeof(rows));
+        input.read((char*)&cols, sizeof(cols));
+
+        data = new T*[rows];
+        for(int i=0; i<rows; i++)
+            data[i] = new T[cols];
+
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                input.read((char*)&data[i][j], sizeof(T));
+            }
+        }
+    }
+
     Matrix t() const {
         Matrix result(cols, rows);
         for (int i = 0; i < cols; i++) {
