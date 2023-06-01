@@ -26,6 +26,32 @@ public:
         }
     }
 
+    T** get_data() const { return data; }
+
+    template <typename R>
+    R get_rows() const {
+        if (std::is_same<R, int>::value) {
+            return static_cast<R>(rows);
+        } else if (std::is_same<R, double>::value) {
+            return static_cast<R>(rows);
+        } else {
+            // Maneja otros tipos aquí
+            throw std::invalid_argument("Unsupported type");
+        }
+    }
+
+    template <typename R>
+    R get_cols() const {
+        if (std::is_same<R, int>::value) {
+            return static_cast<R>(cols);
+        } else if (std::is_same<R, double>::value) {
+            return static_cast<R>(cols);
+        } else {
+            // Maneja otros tipos aquí
+            throw std::invalid_argument("Unsupported type");
+        }
+    }
+
     Matrix(const std::initializer_list<std::initializer_list<T>>& init) {
         rows = init.size();
         if (rows == 0) {
@@ -328,6 +354,8 @@ public:
         }
         return *this;
     }
+
+
 
     class Proxy {
     private:

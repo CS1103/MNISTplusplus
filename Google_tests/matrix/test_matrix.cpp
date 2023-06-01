@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "matrix.h"
+#include <fstream>
 
 TEST(MatrixConstructorTest, ParameterConstructor){
     Matrix<int> m(3, 3);
@@ -271,4 +272,37 @@ TEST(RandomMatrix ,ReplicableRandomness){
     ASSERT_DOUBLE_EQ(m3(2,2), seed_42[8]);
     EXPECT_EQ(m3, m4);
 
+}
+
+
+TEST(MatrixTest, SerializationDeserializationTest) {
+    // Crear un objeto Matrix
+    Matrix<int> matrix1(2, 2);
+    matrix1.randomValues(1234);
+
+    // Serializar la matriz en un archivo
+    std::ofstream ofile("matrix_test.bin", std::ios::binary | std::ios::out);
+    if (!ofile) {
+        FAIL() << "No se pudo abrir el archivo para escritura.";
+    }
+    matrix1.serialize(ofile);
+    ofile.close();
+
+    // Deserializar la matriz desde el archivo
+    std::ifstream ifile("matrix_test.bin", std::ios::binary | std::ios::in);
+    if (!ifile) {
+        FAIL() << "No se pudo abrir el archivo para lectura.";
+    }
+    Matrix<int> matrix2(1, 1);
+    matrix2.deserialize(ifile);
+    ifile.close();
+
+    // Comprobar que las matrices serializadas y deserializadas son iguales
+    ASSERT_EQ(matrix1.get_rows<int>(), matrix2.get_rows<int>());
+    ASSERT_EQ(matrix1.get_cols<int>(), matrix2.get_cols<int>());
+    for (int i = 0; i < matrix1.get_rows<int>(); ++i) {
+        for (int j = 0; j < matrix1.get_cols<int>(); ++j) {
+            EXPECT_EQ(matrix1.get_data()[i][j], matrix2.get_data()[i][j]);
+        }
+    }
 }
