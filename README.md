@@ -4,6 +4,8 @@
 
 MNIST++ is a project developed by students from UTEC as a course project for CS1103. It focuses on implementing the Backpropagation algorithm in C++ for recognizing handwritten digits using the MNIST dataset.
 
+We share with you our presentation: https://www.beautiful.ai/player/-NWtcsAmPmBlmQJpn9oW/MNIST
+
 ## Team Members 👥👨‍💻
 
 | Name            | Email                     | GitHub User    |
