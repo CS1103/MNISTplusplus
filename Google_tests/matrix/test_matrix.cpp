@@ -1,6 +1,15 @@
 #include <gtest/gtest.h>
 #include "matrix.h"
 
+TEST(MatrixConstructorDefaultTest, DefaultConstructor){
+    Matrix<int> m;
+    EXPECT_EQ(m.get_rows(),0);
+    EXPECT_EQ(m.get_cols(),0);
+    Matrix<double> m1;
+    EXPECT_EQ(m1.get_rows(), 0);
+    EXPECT_EQ(m1.get_cols(), 0);
+}
+
 TEST(MatrixConstructorTest, ParameterConstructor){
     Matrix<int> m(3, 3);
     EXPECT_EQ(m(0,0),0);

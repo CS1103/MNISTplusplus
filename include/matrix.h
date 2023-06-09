@@ -11,10 +11,19 @@ using namespace std;
 template <typename T>
 class Matrix {
 private:
-    T** data;
-    size_t rows;
-    size_t cols;
+    T** data = nullptr;
+    size_t rows {};
+    size_t cols {};
 public:
+    size_t get_rows() const {
+	return rows;
+    }
+
+    size_t get_cols() const {
+	return cols;
+    }
+
+    Matrix() = default;
 
     Matrix(int rows, int cols) : rows(rows), cols(cols) {
         data = new T*[rows];
