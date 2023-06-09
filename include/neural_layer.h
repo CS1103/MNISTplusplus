@@ -76,6 +76,14 @@ public:
         return result;
     }
 
+    size_t get_input_size() const {
+        return _n;
+    }
+
+    size_t get_output_size() const {
+        return _m;
+    }
+
 };
 
 
