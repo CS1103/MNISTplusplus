@@ -124,6 +124,14 @@ public:
         return *this;
     }
 
+    void fill(T value) {
+        for (size_t i = 0; i < get_rows(); ++i) {
+            for (size_t j = 0; j < get_cols(); ++j) {
+                (*this)(i, j) = value;
+            }
+        }
+    }
+
     ~Matrix() {
         for (int i = 0; i < rows; i++) {
             delete[] data[i];

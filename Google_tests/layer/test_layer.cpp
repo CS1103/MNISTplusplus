@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "neural_layer.h"
 
-
 TEST(test_layer, test_forward){
     Matrix<int> input(28*28,1 );
     input.randomValues(123);
