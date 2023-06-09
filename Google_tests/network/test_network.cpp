@@ -25,7 +25,7 @@ TEST(NeuralNetworkTest, OperatorBracketTest) {
     EXPECT_EQ(nn[1].get_output_size(), 2);
 }
 
-TEST(NeuralNetworkTest, FowardTest) {
+TEST(NeuralNetworkTest, ForwardTest) {
     neural_network nn;
     nn.add_layer(10,5);
     nn.add_layer(5,2);
