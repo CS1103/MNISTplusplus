@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "matrix.h"
+#include <vector>
 
 TEST(MatrixConstructorDefaultTest, DefaultConstructor){
     Matrix<int> m;
@@ -8,6 +9,35 @@ TEST(MatrixConstructorDefaultTest, DefaultConstructor){
     Matrix<double> m1;
     EXPECT_EQ(m1.get_rows(), 0);
     EXPECT_EQ(m1.get_cols(), 0);
+}
+
+TEST(MatrixFlattenTest, Flatten) {
+    Matrix<int> m({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+    Matrix<int> testflatten = m.flatten();
+    EXPECT_EQ(testflatten.get_rows(), 1);
+    EXPECT_EQ(testflatten.get_cols(), testflatten.get_cols() * testflatten.get_rows());
+    EXPECT_EQ(testflatten(0,0), 1);
+    EXPECT_EQ(testflatten(0,1), 2);
+    EXPECT_EQ(testflatten(0,2), 3);
+    EXPECT_EQ(testflatten(0,3), 4);
+    EXPECT_EQ(testflatten(0,4), 5);
+    EXPECT_EQ(testflatten(0,5), 6);
+    EXPECT_EQ(testflatten(0,6), 7);
+    EXPECT_EQ(testflatten(0,7), 8);
+    EXPECT_EQ(testflatten(0,8), 9);
+    Matrix<double> m1({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}});
+    Matrix<double> testflatten1 = m1.flatten();
+    EXPECT_EQ(testflatten1.get_rows(), 1);
+    EXPECT_EQ(testflatten1.get_cols(), testflatten1.get_cols() * testflatten1.get_rows());
+    EXPECT_EQ(testflatten1(0,0), 1.0);
+    EXPECT_EQ(testflatten1(0,1), 2.0);
+    EXPECT_EQ(testflatten1(0,2), 3.0);
+    EXPECT_EQ(testflatten1(0,3), 4.0);
+    EXPECT_EQ(testflatten1(0,4), 5.0);
+    EXPECT_EQ(testflatten1(0,5), 6.0);
+    EXPECT_EQ(testflatten1(0,6), 7.0);
+    EXPECT_EQ(testflatten1(0,7), 8.0);
+    EXPECT_EQ(testflatten1(0,8), 9.0);
 }
 
 TEST(MatrixConstructorTest, ParameterConstructor){
