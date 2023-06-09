@@ -134,6 +134,17 @@ public:
         return result;
     }
 
+    Matrix flatten() const {
+        Matrix result(1, rows * cols);
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++, index++) {
+                result(0, index) = data[i][j];
+            }
+        }
+        return result;
+    }
+
     Matrix operator-(const Matrix& other) const {
         if (rows != other.rows || cols != other.cols) {
             throw runtime_error("Matrices must have the same size for -= operation.");
