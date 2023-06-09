@@ -8,8 +8,8 @@
 template<typename T>
 class neural_layer {
 private:
-    size_t _n = 0;
-    size_t _m = 0;
+    size_t input_size = 0;
+    size_t output_size = 0;
 
     Matrix<T> w;
     Matrix<T> b;
@@ -18,7 +18,7 @@ private:
 public:
 
     //Constructors
-    neural_layer(size_t n, size_t m): _n(n), _m(m){
+    neural_layer(size_t n, size_t m): input_size(n), output_size(m){
         w = Matrix<T>(m,n);
         w.randomValues(123);
 
@@ -27,16 +27,16 @@ public:
     }
 
     neural_layer(const neural_layer& other)
-            : _n(other._n), _m(other._m), w(other.w), b(other.b)
+            : input_size(other.input_size), output_size(other.output_size), w(other.w), b(other.b)
     {
     }
 
     // Constructor de movimiento
     neural_layer(neural_layer&& other) noexcept
-            : _n(other._n), _m(other._m), w(std::move(other.w)), b(std::move(other.b))
+            : input_size(other.input_size), output_size(other.output_size), w(std::move(other.w)), b(std::move(other.b))
     {
-        other._n = 0;
-        other._m = 0;
+        other.input_size = 0;
+        other.output_size = 0;
     }
 
     virtual ~neural_layer() =default;
@@ -77,11 +77,11 @@ public:
     }
 
     size_t get_input_size() const {
-        return _n;
+        return input_size;
     }
 
     size_t get_output_size() const {
-        return _m;
+        return output_size;
     }
 
 };
