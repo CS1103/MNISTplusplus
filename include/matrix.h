@@ -15,6 +15,7 @@ private:
     size_t rows {};
     size_t cols {};
 public:
+
     size_t get_rows() const {
 	return rows;
     }
@@ -33,6 +34,23 @@ public:
                 data[i][j] = 0;
             }
         }
+    }
+
+    T* operator[](int index) const {
+        if (index >= rows) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+
+    Matrix<T> flatten() const {
+        Matrix<T> result(rows * cols,1); // 1 column matrix
+        for (int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++){
+                result[i * cols + j][0] = data[i][j];
+            }
+        }
+        return result;
     }
 
     Matrix(const std::initializer_list<std::initializer_list<T>>& init) {
@@ -129,17 +147,6 @@ public:
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 result(i, j) = data[i][j] + other(i, j);
-            }
-        }
-        return result;
-    }
-
-    Matrix flatten() const {
-        Matrix result(1, rows * cols);
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++, index++) {
-                result(0, index) = data[i][j];
             }
         }
         return result;
