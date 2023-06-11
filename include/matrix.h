@@ -124,10 +124,19 @@ public:
         return *this;
     }
 
-    void fill(T value) {
+    void fill(int seed = -1) {
+        std::mt19937 gen;
+        if (seed == -1) {
+            gen = std::mt19937(std::random_device{}());
+        }else{
+            randomValues(seed);
+            return;
+        }
+        std::uniform_int_distribution<int> distribution(0, 1);
+
         for (size_t i = 0; i < get_rows(); ++i) {
             for (size_t j = 0; j < get_cols(); ++j) {
-                (*this)(i, j) = value;
+                (*this)(i, j) = distribution(gen);
             }
         }
     }
