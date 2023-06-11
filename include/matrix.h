@@ -310,35 +310,16 @@ public:
 
     std::pair<int,int> shape() const{return {rows, cols};}
 
-    Matrix& fillRandom(){
-        //pseudo-random number generator using merssene twister algorithm
-        std::mt19937 gen(std::random_device{}());
-
-        if constexpr(std::is_same<T,int>::value){
-            //defines an integer number uniform distribution in a specific range
-            std::uniform_int_distribution<int> distribution(0, 1);
-            for (size_t i = 0; i < rows; ++i) {
-                for (size_t j = 0; j < cols; ++j) {
-                    data[i][j] = distribution(gen);
-                }
-            }
-        }else{
-            //defines a real number uniform distribution in a specific range
-            std::uniform_real_distribution<float> distribution(0.0, 1.0);
-            for (size_t i = 0; i < rows; ++i) {
-                for (size_t j = 0; j < cols; ++j) {
-                    data[i][j] = distribution(gen);
-                }
-            }
-        }
-        return *this;
-    }
-
-
-    Matrix& randomValues(int seed){
+    Matrix& randomValues(int seed = -1){
 
         //pseudo-random number generator using merssene twister algorithm and a specific seed
-        std::mt19937 gen(seed);
+        std::mt19937 gen;
+        if (seed == -1){
+            gen = std::mt19937(std::random_device{}());
+        }
+        else{
+            gen = std::mt19937(seed);
+        }
 
         if constexpr(std::is_same<T,int>::value){
             //defines an integer number uniform distribution in a specific range

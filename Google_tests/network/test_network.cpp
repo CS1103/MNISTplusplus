@@ -30,7 +30,7 @@ TEST(NeuralNetworkTest, ForwardTest) {
     nn.add_layer(10,5);
     nn.add_layer(5,2);
     Matrix<double> input(10, 1);
-    input.fillRandom();
+    input.randomValues();
     Matrix<double> output = nn.forward(input);
     EXPECT_EQ(output.get_rows(), 2);
     EXPECT_EQ(output.get_cols(), 1);
