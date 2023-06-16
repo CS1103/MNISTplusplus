@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <fstream>
 #include "neural_layer.h"
 #include "neural_network.h"
 
@@ -49,4 +50,32 @@ TEST(NeuralNetworkTest, GetLayersTest) {
     nn.add_layer(5,2);
     std::vector<neural_layer<double>>& layers = nn.get_layers();
     EXPECT_EQ(layers.size(), 2);
+}
+
+TEST(NeuralNetworkTest, SerializerTest){
+    neural_network nn;
+    nn.add_layer(10,5);
+    nn.add_layer(5,2);
+    nn.serialize("test.txt");
+    EXPECT_EQ(nn[0].get_input_size(), 10);
+    EXPECT_EQ(nn[0].get_output_size(), 5);
+    EXPECT_EQ(nn[1].get_input_size(), 5);
+    EXPECT_EQ(nn[1].get_output_size(), 2);
+}
+
+TEST(NeuralNetworkTest, DeserializeTest){
+
+    neural_network nn1;
+    nn1.deserialize("../../Google_tests/files/data.txt");
+
+
+    neural_network nn2;
+    nn2.deserialize("../../Google_tests/files/data.txt");
+
+    Matrix<double> input(5, 1);
+    input.randomValues();
+    auto forward1 = nn1.forward(input);
+    auto forward2 = nn2.forward(input);
+
+    EXPECT_EQ(forward1, forward2);
 }

@@ -125,18 +125,18 @@ public:
     }
 
     void fill(int seed = -1) {
-        std::mt19937 gen;
-        if (seed == -1) {
-            gen = std::mt19937(std::random_device{}());
-        }else{
+        if(data != nullptr) return;
+        if (seed != -1){
             randomValues(seed);
             return;
         }
+
+        std::mt19937 gen = std::mt19937(std::random_device{}());
         std::uniform_int_distribution<int> distribution(0, 1);
 
-        for (size_t i = 0; i < get_rows(); ++i) {
-            for (size_t j = 0; j < get_cols(); ++j) {
-                (*this)(i, j) = distribution(gen);
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < cols; ++j) {
+                data[i][j] = distribution(gen);
             }
         }
     }
@@ -322,13 +322,7 @@ public:
     Matrix& randomValues(int seed = -1){
 
         //pseudo-random number generator using merssene twister algorithm and a specific seed
-        std::mt19937 gen;
-        if (seed == -1){
-            gen = std::mt19937(std::random_device{}());
-        }
-        else{
-            gen = std::mt19937(seed);
-        }
+        std::mt19937 gen(seed == -1 ? std::random_device{}() : seed);
 
         if constexpr(std::is_same<T,int>::value){
             //defines an integer number uniform distribution in a specific range
@@ -390,7 +384,7 @@ std::ostream &operator<<(std::ostream &os, const Matrix<U> &matrix) {
         for (int j = 0; j < matrix.cols; ++j) {
             os << matrix(i,j) << ' ';
         }
-        os << '\n';
+        os << ' ';
     }
     return os;
 }

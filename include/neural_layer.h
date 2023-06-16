@@ -25,6 +25,7 @@ public:
         b= Matrix<T>(m,1);
         b.randomValues(123);
     }
+    neural_layer(size_t n, size_t m, Matrix<T>& w, Matrix<T>& b): input_size(n), output_size(m), w(std::move(w)), b(std::move(b)){}
 
     neural_layer(const neural_layer& other)
             : input_size(other.input_size), output_size(other.output_size), w(other.w), b(other.b)
@@ -43,7 +44,7 @@ public:
 
     // Forward propagation functions
 
-    T sigmoid(T x){
+    T sigmoid(T& x){
         return 1.0/(1.0+exp(-x));
     }
 
@@ -82,6 +83,13 @@ public:
 
     size_t get_output_size() const {
         return output_size;
+    }
+
+    const Matrix<T>& get_w()  {
+        return w;
+    }
+    const Matrix<T>& get_b(){
+        return b;
     }
 
 };
