@@ -64,12 +64,16 @@ TEST(NeuralNetworkTest, SerializerTest){
 }
 
 TEST(NeuralNetworkTest, DeserializeTest){
+    neural_network nn;
+    nn.add_layer(5, 5);
+    nn.add_layer(5, 5);
+    nn.serialize("./test.txt");
 
     neural_network nn1;
-    nn1.deserialize("../../Google_tests/Files/data.txt");
+    nn1.deserialize("./test.txt");
 
     neural_network nn2;
-    nn2.deserialize("../../Google_tests/Files/data.txt");
+    nn2.deserialize("./test.txt");
 
     Matrix<double> input(5, 1);
     input.randomValues();
