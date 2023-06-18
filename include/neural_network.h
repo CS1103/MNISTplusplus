@@ -6,6 +6,7 @@
 #include <vector>
 #include <stack>
 #include <fstream>
+#include <sstream>
 #include <initializer_list>
 
 class neural_network {
