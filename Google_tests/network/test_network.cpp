@@ -68,7 +68,6 @@ TEST(NeuralNetworkTest, DeserializeTest){
     neural_network nn1;
     nn1.deserialize("../../Google_tests/files/data.txt");
 
-
     neural_network nn2;
     nn2.deserialize("../../Google_tests/files/data.txt");
 
@@ -78,4 +77,27 @@ TEST(NeuralNetworkTest, DeserializeTest){
     auto forward2 = nn2.forward(input);
 
     EXPECT_EQ(forward1, forward2);
+}
+
+TEST(NeuralNetworkTest, SerializeTest) {
+    neural_network nn;
+    nn.add_layer(5, 5);
+    nn.add_layer(5, 5);
+    nn.serialize("./test.txt");
+    neural_network nn2;
+    nn2.deserialize("./test.txt");
+
+    Matrix<double> input(5, 1);
+    input.randomValues(123);
+    Matrix<double> input2(5,1);
+    input2.randomValues(123);
+    auto f1 = nn.forward(input);
+    auto f2 = nn2.forward(input2);
+
+    for (int i = 0; i< f1.get_rows(); i++){
+        for(int j = 0; j < f1.get_cols(); j++){
+            EXPECT_NEAR(f1(i,j), f2(i,j),1e-5);
+        }
+    }
+
 }

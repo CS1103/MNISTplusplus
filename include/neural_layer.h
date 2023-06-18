@@ -44,7 +44,7 @@ public:
 
     // Forward propagation functions
 
-    T sigmoid(T& x){
+    T sigmoid(T x){
         return 1.0/(1.0+exp(-x));
     }
 

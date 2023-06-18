@@ -2,6 +2,7 @@
 #define MNISTPLUSPLUS_NEURAL_NETWORK_H
 
 #include "neural_layer.h"
+#include <utility>
 #include <vector>
 #include <stack>
 #include <fstream>
@@ -24,10 +25,10 @@ public:
         layers.emplace_back(n, m);
     }
 
-    Matrix<double> forward(Matrix<double>& input) {
-        Matrix<double> activation = input;
+    Matrix<double> forward(Matrix<double> input) {
+        Matrix<double> activation = std::move(input);
         for (auto& layer : layers) {
-            activation = std::move(layer.forward(activation));
+            activation = layer.forward(activation);
         }
         return activation;
     }
@@ -120,7 +121,7 @@ public:
                 n_layers = stoi(trim(token));
             }
             else if(trim(token) == "layers"){
-
+                int current_layer = 0;
                 stack<string> seps;
 
                 getline(ss, token);
@@ -173,7 +174,7 @@ public:
                         for(int rows =0; rows < input_size; rows++){
                             for(int cols=0; cols < output_size; cols++){
                                 getline(ss,token,' ');
-                                layer[0](rows,cols) = stod(token);
+                                layer[current_layer](rows,cols) = stod(token);
                             }
                         }
                         getline(ss,token,',');
@@ -186,9 +187,9 @@ public:
 
                         for(int rows =0; rows < output_size; rows++){
                             getline(ss,token,' ');
-                            layer[1](rows,0) = stod(token);
+                            layer[current_layer+1](rows,0) = stod(token);
                         }
-
+                        current_layer += 2;
                         getline(ss,token,',');
                         if( seps.top() == "{" && trim(token) == "}" || seps.top() == "[" && trim(token) == "]") seps.pop();
 
