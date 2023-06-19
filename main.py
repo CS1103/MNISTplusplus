@@ -1,5 +1,3 @@
-import subprocess
-import sys
 from flask import (
     Flask,
     jsonify,
@@ -13,9 +11,11 @@ carpeta_static = carpeta_actual + "/templates/static"
 
 app = Flask(__name__, static_folder=carpeta_static)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route("/backpropagation", methods=['POST'])
 def backpropagation():
@@ -28,6 +28,7 @@ def backpropagation():
         print(e)
 
     return jsonify(response)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
