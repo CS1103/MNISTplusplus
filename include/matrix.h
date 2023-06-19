@@ -319,7 +319,7 @@ public:
 
     std::pair<int,int> shape() const{return {rows, cols};}
 
-    Matrix& randomValues(int seed = -1){
+    Matrix& randomValues(int seed = RANDOM_SEED){
 
         //pseudo-random number generator using merssene twister algorithm and a specific seed
         std::mt19937 gen(seed == -1 ? std::random_device{}() : seed);

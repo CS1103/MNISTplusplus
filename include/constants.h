@@ -12,6 +12,6 @@ extern std::string TEST_LABEL_PATH;
 extern float RANDOM_LOWER_LIMIT;
 extern float RANDOM_UPPER_LIMIT;
 
-//extern int SEED;
+constexpr int RANDOM_SEED {123};
 
 #endif //MNISTPLUSPLUS_CONSTANTS_H
