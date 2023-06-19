@@ -7,5 +7,3 @@ std::string TEST_LABEL_PATH = "../Data/t10k-labels.idx1-ubyte";
 
 float RANDOM_LOWER_LIMIT = 0.0;
 float RANDOM_UPPER_LIMIT = 1.0;
-
-//int SEED = 123;
