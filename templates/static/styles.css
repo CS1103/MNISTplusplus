@@ -1,0 +1,177 @@
+canvas {
+    border: 1px solid black;
+    background-color: white;
+}
+.canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  flex-direction: column;
+}
+body {
+    background-color: #0DD8D1; /* Cambia el color de fondo a tu elección */
+    font-family: 'Lato', sans-serif;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.isotipo {
+  width: 50px;
+  height: auto;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.message {
+
+}
+
+.titulo {
+  font-size: 3em;
+  margin: 0 0 0 0;
+}
+
+.elemento-header {
+  margin-right: 10px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+.button {
+  appearance: none;
+  backface-visibility: hidden;
+  background-color: #1B0B4D;
+  border-radius: 10px;
+  border-style: none;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  height: 50px;
+  letter-spacing: normal;
+  line-height: 1.5;
+  outline: none;
+  overflow: hidden;
+  padding: 14px 30px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transform: translate3d(0, 0, 0);
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #000000;
+  box-shadow: rgba(0, 0, 0, .05) 0 5px 30px, rgba(0, 0, 0, .05) 0 1px 4px;
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: .35s;
+}
+
+.button:hover:after {
+  opacity: .5;
+}
+
+.button:active {
+  box-shadow: rgba(0, 0, 0, .1) 0 3px 6px 0, rgba(0, 0, 0, .1) 0 0 10px 0, rgba(0, 0, 0, .1) 0 1px 4px -1px;
+  transform: translateY(2px);
+  transition-duration: .35s;
+}
+
+.button:active:after {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .button {
+    padding: 14px 22px;
+    width: 176px;
+  }
+}
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #0DD8D1;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
