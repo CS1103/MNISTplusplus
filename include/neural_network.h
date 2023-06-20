@@ -23,8 +23,8 @@ public:
         layers.push_back(layer);
     }
 
-    void add_layer(size_t n, size_t m) {
-        layers.emplace_back(n, m);
+    void add_layer(size_t input_size, size_t output_size) {
+        layers.emplace_back(input_size, output_size);
     }
 
     Matrix<double> forward(Matrix<double> input) {
@@ -76,7 +76,7 @@ public:
         if(!file.is_open()){
             throw runtime_error("Error opening file");
         }
-        file << "2054\n";
+        file << SERIALIZE_MAGIC_NUMBER << "\n";
         file << "n_layers : " << layers.size() << ",\n";
         file << "layers : {\n";
 
