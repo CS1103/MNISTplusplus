@@ -18,14 +18,14 @@ private:
 public:
 
     //Constructors
-    neural_layer(size_t n, size_t m): input_size(n), output_size(m){
-        w = Matrix<T>(m,n);
+    neural_layer(size_t input_sz, size_t out_sz): input_size(input_sz), output_size(out_sz){
+        w = Matrix<T>(out_sz,input_sz);
         w.randomValues(123);
 
-        b= Matrix<T>(m,1);
+        b= Matrix<T>(out_sz,1);
         b.randomValues(123);
     }
-    neural_layer(size_t n, size_t m, Matrix<T>& w, Matrix<T>& b): input_size(n), output_size(m), w(std::move(w)), b(std::move(b)){}
+    neural_layer(size_t input_sz, size_t out_sz, Matrix<T>& w, Matrix<T>& b): input_size(input_sz), output_size(out_sz), w(std::move(w)), b(std::move(b)){}
 
     neural_layer(const neural_layer& other)
             : input_size(other.input_size), output_size(other.output_size), w(other.w), b(other.b)
