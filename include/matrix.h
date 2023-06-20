@@ -124,22 +124,6 @@ public:
         return *this;
     }
 
-    void fill(int seed = -1) {
-        if(data != nullptr) return;
-        if (seed != -1){
-            randomValues(seed);
-            return;
-        }
-
-        std::mt19937 gen = std::mt19937(std::random_device{}());
-        std::uniform_int_distribution<int> distribution(0, 1);
-
-        for (size_t i = 0; i < rows; ++i) {
-            for (size_t j = 0; j < cols; ++j) {
-                data[i][j] = distribution(gen);
-            }
-        }
-    }
 
     ~Matrix() {
         for (int i = 0; i < rows; i++) {
@@ -334,7 +318,7 @@ public:
             }
         }else{
             //defines a real number uniform distribution in a specific range
-            std::uniform_real_distribution<float> distribution(0.0, 1.0);
+            std::uniform_real_distribution<float> distribution(RANDOM_LOWER_LIMIT,RANDOM_UPPER_LIMIT);
             for (size_t i = 0; i < rows; ++i) {
                 for (size_t j = 0; j < cols; ++j) {
                     data[i][j] = distribution(gen);

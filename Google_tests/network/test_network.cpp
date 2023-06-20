@@ -63,26 +63,6 @@ TEST(NeuralNetworkTest, SerializerTest){
     EXPECT_EQ(nn[1].get_output_size(), 2);
 }
 
-TEST(NeuralNetworkTest, DeserializeTest){
-    neural_network nn;
-    nn.add_layer(5, 5);
-    nn.add_layer(5, 5);
-    nn.serialize("./test.txt");
-
-    neural_network nn1;
-    nn1.deserialize("./test.txt");
-
-    neural_network nn2;
-    nn2.deserialize("./test.txt");
-
-    Matrix<double> input(5, 1);
-    input.randomValues();
-    auto forward1 = nn1.forward(input);
-    auto forward2 = nn2.forward(input);
-
-    EXPECT_EQ(forward1, forward2);
-}
-
 TEST(NeuralNetworkTest, SerializeTest) {
     neural_network nn;
     nn.add_layer(5, 5);

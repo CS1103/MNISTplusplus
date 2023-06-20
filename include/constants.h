@@ -9,9 +9,11 @@ extern std::string TRAIN_LABEL_PATH;
 extern std::string TEST_IMAGE_PATH;
 extern std::string TEST_LABEL_PATH;
 
-extern float RANDOM_LOWER_LIMIT;
-extern float RANDOM_UPPER_LIMIT;
+constexpr float RANDOM_LOWER_LIMIT {0.0};
+constexpr float RANDOM_UPPER_LIMIT {1.0};
 
 constexpr int RANDOM_SEED {123};
+
+constexpr const char* SERIALIZE_MAGIC_NUMBER {"2054"};
 
 #endif //MNISTPLUSPLUS_CONSTANTS_H
