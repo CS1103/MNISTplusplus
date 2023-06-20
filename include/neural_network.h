@@ -2,6 +2,7 @@
 #define MNISTPLUSPLUS_NEURAL_NETWORK_H
 
 #include "neural_layer.h"
+#include "constants.h"
 #include <utility>
 #include <vector>
 #include <stack>
@@ -100,7 +101,7 @@ public:
         string line;
         getline(file, line);
 
-        if(line != "2054"){
+        if(line != SERIALIZE_MAGIC_NUMBER){
             throw runtime_error("Invalid file");
         }
 
