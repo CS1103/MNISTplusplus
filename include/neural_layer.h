@@ -84,8 +84,19 @@ public:
         return result;
     }
 
-    T loss_derivative(T ground_truth, T prediction){
-        return -(ground_truth/prediction - (1.0 - ground_truth)/(1.0 - prediction));
+    Matrix<double> loss (Matrix<double>& output, Matrix<double>& target){
+        Matrix<double> res((int)output.get_rows(), (int)output.get_rows());
+
+        for(int row = 0; row < output.get_rows(); row++){
+            for(int col = 0; col < output.get_cols(); col++ ){
+                res(row,col) = -( target(row,col) * log(output(row, col)) + (1 - target(row, col)) * log(1 - output(row, col)) );
+            }
+        }
+        return res;
+    }
+
+    T loss_derivative(T target, T prediction){
+        return -(target / prediction - (1.0 - target) / (1.0 - prediction));
     }
 
     Matrix<T> mtx_loss_derivative(Matrix<T> ground_truth, Matrix<T> prediction){
@@ -102,9 +113,9 @@ public:
         return result;
     }
 
-    Matrix<T> backward(Matrix<T> input, Matrix<T> true_value, double alpha){
-        Matrix<T> da = mtx_loss_derivative(true_value, input);
-        Matrix<T> dz = da*(mtx_sigmoid_derivative(input)); // Debe de ser element wise
+    Matrix<T> backward(Matrix<T> input, Matrix<T> target, double alpha){
+        Matrix<T> da = mtx_loss_derivative(target, input);
+        Matrix<T> dz = target - input; // Debe de ser element wise
         dw = dz * input.t();
         db = dz;
 
