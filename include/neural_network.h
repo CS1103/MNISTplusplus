@@ -3,6 +3,7 @@
 
 #include "neural_layer.h"
 #include "constants.h"
+#include <ranges>
 #include <utility>
 #include <vector>
 #include <stack>
@@ -13,6 +14,7 @@
 class neural_network {
 private:
     std::vector<neural_layer<double>> layers;
+    double learning_rate = 0.01;
 
 public:
     neural_network() = default;
@@ -35,7 +37,13 @@ public:
         return activation;
     }
 
-
+    Matrix<double> backward(Matrix<double> output, const Matrix<double>& target) {
+        Matrix<double> error = std::move(output);
+        for (auto & layer : std::ranges::reverse_view(layers)) {
+            error = layer.backward(error, target, learning_rate);
+        }
+        return error;
+    }
 
     std::vector<neural_layer<double>>& get_layers() {
         return layers;
