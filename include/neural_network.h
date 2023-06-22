@@ -4,6 +4,7 @@
 #include "neural_layer.h"
 #include "constants.h"
 #include <ranges>
+#include <cmath>
 #include <utility>
 #include <vector>
 #include <stack>
@@ -37,12 +38,22 @@ public:
         return activation;
     }
 
-    Matrix<double> backward(Matrix<double> output, const Matrix<double>& target) {
-        Matrix<double> error = std::move(output);
-        for (auto & layer : std::ranges::reverse_view(layers)) {
-            error = layer.backward(error, target, learning_rate);
+
+    Matrix<double> backward(Matrix<double>& output, Matrix<double>& target) {
+        Matrix<double> error = output;
+        for(auto it = layers.rbegin(); it != layers.rend(); advance(it,1)){
+            error = it->backward(error, target, learning_rate);
         }
         return error;
+    }
+
+    void train(Matrix<double>& input, Matrix<double>& target, size_t epochs) {
+
+
+        for (size_t i = 0; i < epochs; ++i) {
+            Matrix<double> output = forward(input);
+            backward(output, target);
+        }
     }
 
     std::vector<neural_layer<double>>& get_layers() {
