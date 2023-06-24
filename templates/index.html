@@ -28,10 +28,17 @@
         <canvas id="canvas" width="400" height="400"></canvas>
       </div>
       <div class="button-container">
-          <a href="#popup1">
-            <button class="button" onclick="convertirAMatriz()">Backpropagation!</button>
-          </a>
+          <button class="button" onclick="convertirAMatriz()">Backpropagation!</button>
           <button class="button" onclick="limpiarCanvas()">Clear Canvas</button>
+      </div>
+
+      <div id="carga" class="overlay">
+      	<div class="popup">
+      		<h2>MNIST++ cargando...</h2>
+      		<div class="content">
+      			<img src="static\img\isotipo.png" alt="MNIST++ cargando" class="rotating-image">
+      		</div>
+      	</div>
       </div>
 
       <div id="popup1" class="overlay">

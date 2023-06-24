@@ -5,6 +5,7 @@ from flask import (
     request
 )
 import os
+import time
 
 carpeta_actual = os.getcwd()
 carpeta_static = carpeta_actual + "/templates/static"
@@ -22,7 +23,7 @@ def backpropagation():
     response = {"answer": 9}
     try:
         matriz = request.get_json()['matriz']
-
+        time.sleep(10)
         print(matriz)
     except Exception as e:
         print(e)

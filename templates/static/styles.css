@@ -164,7 +164,7 @@ a {
 }
 .popup .content {
   max-height: 30%;
-  overflow: auto;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 700px){
@@ -173,5 +173,20 @@ a {
   }
   .popup{
     width: 70%;
+  }
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+.rotating-image {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
