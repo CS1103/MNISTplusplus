@@ -10,6 +10,15 @@ TEST(MatrixConstructorDefaultTest, DefaultConstructor){
     EXPECT_EQ(m1.get_cols(), 0);
 }
 
+TEST(MatrixSpecializationConstructorTest, SpecializationConstructor){
+    std::vector<float> v = {1, 2, 3, 4};
+    Matrix<int> m(2, 2, v);
+    EXPECT_EQ(m(0,0),1);
+    EXPECT_EQ(m(0,1),2);
+    EXPECT_EQ(m(1,0),3);
+    EXPECT_EQ(m(1,1),4);
+}
+
 TEST(MatrixFlattenTest, Flatten) {
     Matrix<int> m({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
     Matrix<int> testflatten = m.flatten();

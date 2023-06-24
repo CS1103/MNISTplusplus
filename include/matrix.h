@@ -80,6 +80,21 @@ public:
         }
     }
 
+    // Specialization Constructor vector<float>
+    Matrix(int rows, int cols, std::vector<float> contenedor) : rows(rows), cols(cols) {
+        if (contenedor.size() != rows * cols) {
+            throw std::invalid_argument("The vector size does not match the matrix size.");
+        }
+
+        data = new T *[rows];
+        for (int i = 0; i < rows; i++) {
+            data[i] = new T[cols];
+            for (int j = 0; j < cols; j++) {
+                data[i][j] = contenedor[i * cols + j];
+            }
+        }
+    }
+
     Matrix(const Matrix& other) : rows(other.rows), cols(other.cols) {
         data = new T*[rows];
         for (int i = 0; i < rows; i++) {
