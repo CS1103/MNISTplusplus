@@ -96,6 +96,8 @@ function downscale(matriz, newWidth, newHeight) {
 
 // Función para convertir el canvas a una matriz de 0 y 1
 function convertirAMatriz() {
+    window.location.href = "/#carga";
+
     console.log(matriz);
 
     const matrizReducida = downscale(matriz, 28, 28);
@@ -114,17 +116,23 @@ function convertirAMatriz() {
         console.log(data);
         const answer = data.answer;
         console.log(answer);
-        document.getElementById("popup-title").textContent = "Backpropagation!"
-        document.getElementById("popup-content").textContent = "Your number is " + answer + "!";
+        if (answer == "ERROR") {
+          document.getElementById("popup-title").textContent = "ERROR!"
+          document.getElementById("popup-content").textContent = "We're so sorry, MNIST++ is not working very well today :(";
+        }
+        else {
+          document.getElementById("popup-title").textContent = "Backpropagation!"
+          document.getElementById("popup-content").textContent = "Your number is " + answer + "!";
+        }
+        window.location.href = "/#popup1";
     })
     .catch(error => {
         console.error('Error:', error);
         document.getElementById("popup-title").textContent = "ERROR!"
         document.getElementById("popup-content").textContent = "We're so sorry, MNIST++ is not working very well today :(";
+        window.location.href = "/#popup1";
     });
-
 }
-
 
 // Función para limpiar el contenido del canvas y la matriz
 function limpiarCanvas() {
