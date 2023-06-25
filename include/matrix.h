@@ -11,10 +11,20 @@ using namespace std;
 template <typename T>
 class Matrix {
 private:
-    T** data;
-    size_t rows;
-    size_t cols;
+    T** data = nullptr;
+    size_t rows {};
+    size_t cols {};
 public:
+
+    size_t get_rows() const {
+	return rows;
+    }
+
+    size_t get_cols() const {
+	return cols;
+    }
+
+    Matrix() = default;
 
     Matrix(int rows, int cols) : rows(rows), cols(cols) {
         data = new T*[rows];
@@ -24,6 +34,23 @@ public:
                 data[i][j] = 0;
             }
         }
+    }
+
+    T* operator[](int index) const {
+        if (index >= rows) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+
+    Matrix<T> flatten() const {
+        Matrix<T> result(rows * cols,1); // 1 column matrix
+        for (int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++){
+                result[i * cols + j][0] = data[i][j];
+            }
+        }
+        return result;
     }
 
     T** get_data() const { return data; }
@@ -122,6 +149,7 @@ public:
         }
         return *this;
     }
+
 
     ~Matrix() {
         for (int i = 0; i < rows; i++) {
@@ -330,10 +358,10 @@ public:
 
     std::pair<int,int> shape() const{return {rows, cols};}
 
-    Matrix& randomValues(int seed){
+    Matrix& randomValues(int seed = RANDOM_SEED){
 
         //pseudo-random number generator using merssene twister algorithm and a specific seed
-        std::mt19937 gen(seed);
+        std::mt19937 gen(seed == -1 ? std::random_device{}() : seed);
 
         if constexpr(std::is_same<T,int>::value){
             //defines an integer number uniform distribution in a specific range
@@ -345,7 +373,7 @@ public:
             }
         }else{
             //defines a real number uniform distribution in a specific range
-            std::uniform_real_distribution<float> distribution(0.0, 1.0);
+            std::uniform_real_distribution<float> distribution(RANDOM_LOWER_LIMIT,RANDOM_UPPER_LIMIT);
             for (size_t i = 0; i < rows; ++i) {
                 for (size_t j = 0; j < cols; ++j) {
                     data[i][j] = distribution(gen);
@@ -395,9 +423,8 @@ template <typename U>
 std::ostream &operator<<(std::ostream &os, const Matrix<U> &matrix) {
     for (int i = 0; i < matrix.rows; ++i) {
         for (int j = 0; j < matrix.cols; ++j) {
-            os << matrix(i,j) << ' ';
+            os << matrix(i, j) << ' ';
         }
-        os << '\n';
     }
     return os;
 }
