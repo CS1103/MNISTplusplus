@@ -4,14 +4,13 @@
 #include <time.h>
 
 int main() {
-    srand(time(0));
-
+    srand(time(NULL));
     MNISTReader dataset;
-    dataset.loadTrainDataset(TRAIN_IMAGE_PATH, TRAIN_LABEL_PATH);
-    dataset.loadTestDataset(TEST_IMAGE_PATH,TEST_LABEL_PATH);
+    dataset.load_train_dataset(TRAIN_IMAGE_PATH, TRAIN_LABEL_PATH);
+    dataset.load_test_dataset(TEST_IMAGE_PATH,TEST_LABEL_PATH);
 
-    auto trainImages = dataset.getTrainImg();
-    auto testImages = dataset.getTestImg();
+    auto trainImages = dataset.get_training_data();
+    auto testImages = dataset.get_test_data();
 
     std::cout << "\nLoad train images test\n";
     for(int i = 0; i<10 ; ++i){
