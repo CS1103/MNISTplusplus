@@ -8,6 +8,7 @@ import os
 import time
 import subprocess
 import json
+import struct
 
 carpeta_actual = os.getcwd()
 carpeta_static = carpeta_actual + "/templates/static"
@@ -22,13 +23,16 @@ def index():
 
 @app.route("/backpropagation", methods=['POST'])
 def backpropagation():
-    compilar = subprocess.run(["g++", carpeta_actual+"/test/inference/inference.cpp", "-o", "ejecutable"])
-    if compilar.returncode == 0:
-        matriz = request.get_json()['matriz']
-        with open('matriz.json', 'w') as archivo:
-                json.dump(matriz, archivo)
-                resultado = subprocess.run(["./ejecutable"], input="matriz.json", text=True, capture_output=True)
-    response = {"answer": "1"}
+    matrix = request.get_json()['matriz']
+    with open('matrix.bin', 'wb') as file:
+                rows = len(matrix)
+                columns = len(matrix[0])
+                file.write(struct.pack('ii', rows, columns))
+                for f in matrix:
+                    for element in f:
+                        file.write(struct.pack('i', element))
+    result = subprocess.run(["./cmake-build-debug/inference"], text=True, capture_output=True)
+    response = {"answer": result.stdout}
     return jsonify(response)
 
 
