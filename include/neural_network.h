@@ -18,7 +18,7 @@
 class neural_network {
 private:
     std::vector<neural_layer<double>> layers;
-    double learning_rate = 0.008;
+    double learning_rate = 0.4;
 
 public:
     neural_network() = default;
@@ -40,16 +40,15 @@ public:
     }
 
     Matrix<double> cost ( const Matrix<double>& target, Matrix<double>& prediction){
-        Matrix<double> error(target.get_rows(), target.get_cols());
-        for(int row = 0; row < prediction.get_rows(); row++){
-            for(int col = 0; col < prediction.get_cols(); col++ ){
-                error(row,col) = pow(target(row,col)- prediction(row,col) ,2)/2;
+
+        Matrix<double> log_pred(prediction.get_rows(), prediction.get_cols());
+        for(int row =0; row < prediction.get_rows(); row++){
+            for(int col = 0; col < prediction.get_cols(); col++){
+                log_pred(row,col) = log(prediction(row,col));
             }
         }
 
-        return error;
-        //return prediction - target  ;
-        //return (prediction - 1 ) ^ mtx_sigmoid_derivative(prediction);
+        return -1.0 * (target ^ log_pred);
     }
 
     std::vector <std::pair<Matrix<double>,Matrix<double>>> forward(const Matrix<double>& input) {
@@ -86,7 +85,6 @@ public:
         for(int l = (int)layers.size()-1; l >= 0; l--){
 
             auto &a_ = out[l+1].second;
-
 
             if(l == layers.size()-1){
                 Matrix<double> last_da = (a_ - label);

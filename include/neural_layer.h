@@ -23,11 +23,11 @@ public:
     //Constructors
     neural_layer(size_t input_sz, size_t out_sz): input_size(input_sz), output_size(out_sz){
         w = Matrix<T>(input_sz,out_sz);
-        w.randomValues(123);
+        w.randomValues(0);
         dw = Matrix<T>(input_sz,out_sz);
 
         b= Matrix<T>(out_sz,1);
-        b.randomValues(123);
+        b.randomValues(0);
         db = Matrix<T>(out_sz,1);
 
     }
@@ -111,8 +111,8 @@ public:
         Matrix<double> dz = delta ^ relu_prime(prev_Z);
         Matrix<double> da = w * dz;
 
-        dw += prev_A * dz.t() ;
-        db += dz;
+        dw+= prev_A * dz.t() ;
+        db+= dz;
 
         return da;
         //return (prev_W*delta) ^ mtx_sigmoid_derivative(output);
@@ -122,26 +122,17 @@ public:
         Matrix<double> dz = delta ;
         Matrix<double> da = w * dz;
 
-        dw += prev_output* dz.t();
-        db += dz;
+        dw+= prev_output* dz.t();
+        db+= dz;
 
         return da;
     }
 
-    Matrix<double> loss (Matrix<double>& output, Matrix<double>& target){
-        Matrix<double> res((int)output.get_rows(), (int)output.get_cols());
-
-        for(int row = 0; row < output.get_rows(); row++){
-            for(int col = 0; col < output.get_cols(); col++ ){
-                res(row,col) = -( target(row,col) * log(output(row, col)) + (1 - target(row, col)) * log(1 - output(row, col)) );
-            }
-        }
-        return res;
-    }
-
     void gradient_descent( double learning_rate, int batch_size){
-        w -= (dw/batch_size)*learning_rate;
-        b -= (db/batch_size);
+        dw = (dw/batch_size);
+        db = (db/batch_size);
+        w-= dw*learning_rate;
+        b-= db*learning_rate;
     }
 
     size_t get_input_size() const {
