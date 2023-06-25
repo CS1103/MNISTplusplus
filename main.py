@@ -5,9 +5,7 @@ from flask import (
     request
 )
 import os
-import time
 import subprocess
-import json
 import struct
 
 carpeta_actual = os.getcwd()
@@ -25,13 +23,17 @@ def index():
 def backpropagation():
     matrix = request.get_json()['matriz']
     with open('matrix.bin', 'wb') as file:
-                rows = len(matrix)
-                columns = len(matrix[0])
-                file.write(struct.pack('ii', rows, columns))
-                for f in matrix:
-                    for element in f:
-                        file.write(struct.pack('i', element))
-    result = subprocess.run(["./cmake-build-debug/inference"], text=True, capture_output=True)
+        rows = len(matrix)
+        columns = len(matrix[0])
+        file.write(struct.pack('ii', rows, columns))
+        for f in matrix:
+            for element in f:
+                file.write(struct.pack('i', element))
+    result = subprocess.run(
+        ["./cmake-build-debug/inference"],
+        text=True,
+        capture_output=True
+    )
     response = {"answer": result.stdout}
     return jsonify(response)
 
