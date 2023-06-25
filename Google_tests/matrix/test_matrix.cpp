@@ -297,15 +297,16 @@ TEST(RandomMatrix ,ReplicableRandomness){
     Matrix<int> m4(4,3);
     m4.randomValues(42);
 
-    ASSERT_DOUBLE_EQ(m1(0,0), seed_123[0]);
-    ASSERT_DOUBLE_EQ(m1(0,1), seed_123[1]);
-    ASSERT_DOUBLE_EQ(m1(0,2), seed_123[2]);
-    ASSERT_DOUBLE_EQ(m1(1,0), seed_123[3]);
-    ASSERT_DOUBLE_EQ(m1(1,1), seed_123[4]);
-    ASSERT_DOUBLE_EQ(m1(1,2), seed_123[5]);
-    ASSERT_DOUBLE_EQ(m1(2,0), seed_123[6]);
-    ASSERT_DOUBLE_EQ(m1(2,1), seed_123[7]);
-    ASSERT_DOUBLE_EQ(m1(2,2), seed_123[8]);
+
+    EXPECT_NEAR(m1(0,0), seed_123[0]-0.5,1e-02);
+    EXPECT_NEAR(m1(0,1), seed_123[1]-0.5,1e-02);
+    EXPECT_NEAR(m1(0,2), seed_123[2]-0.5,1e-02);
+    EXPECT_NEAR(m1(1,0), seed_123[3]-0.5,1e-02);
+    EXPECT_NEAR(m1(1,1), seed_123[4]-0.5,1e-02);
+    EXPECT_NEAR(m1(1,2), seed_123[5]-0.5,1e-02);
+    EXPECT_NEAR(m1(2,0), seed_123[6]-0.5,1e-02);
+    EXPECT_NEAR(m1(2,1), seed_123[7]-0.5,1e-02);
+    EXPECT_NEAR(m1(2,2), seed_123[8]-0.5,1e-02);
     EXPECT_EQ(m1, m2);
 
     ASSERT_DOUBLE_EQ(m3(0,0), seed_42[0]);

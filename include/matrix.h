@@ -404,7 +404,7 @@ public:
             std::uniform_real_distribution<float> distribution(RANDOM_LOWER_LIMIT,RANDOM_UPPER_LIMIT);
             for (size_t i = 0; i < rows; ++i) {
                 for (size_t j = 0; j < cols; ++j) {
-                    data[i][j] = distribution(gen) -0.5;
+                    data[i][j] = distribution(gen) - 0.5;
                 }
             }
         }

@@ -18,7 +18,7 @@
 class neural_network {
 private:
     std::vector<neural_layer<double>> layers;
-    double learning_rate = 0.0072;
+    double learning_rate = 0.008;
 
 public:
     neural_network() = default;
