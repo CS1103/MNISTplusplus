@@ -32,7 +32,7 @@ TEST(NeuralNetworkTest, ForwardTest) {
     nn.add_layer(5,2);
     Matrix<double> input(10, 1);
     input.randomValues();
-    Matrix<double> output = nn.forward(input);
+    auto output = nn.inference(input);
     EXPECT_EQ(output.get_rows(), 2);
     EXPECT_EQ(output.get_cols(), 1);
 }
@@ -75,8 +75,8 @@ TEST(NeuralNetworkTest, SerializeTest) {
     input.randomValues(123);
     Matrix<double> input2(5,1);
     input2.randomValues(123);
-    auto f1 = nn.forward(input);
-    auto f2 = nn2.forward(input2);
+    auto f1 = nn.inference(input);
+    auto f2 = nn2.inference(input2);
 
     for (int i = 0; i< f1.get_rows(); i++){
         for(int j = 0; j < f1.get_cols(); j++){
