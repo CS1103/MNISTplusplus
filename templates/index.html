@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" type="image/png" href="static/img/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="static\styles.css">
+
+    <title>MNIST++</title>
+
+</head>
+<body>
+    <div class="header">
+        <a href="https://github.com/CS1103/MNISTplusplus#readme" target="_blank">
+          <img class="isotipo elemento-header" src="static\img\isotipo.png" alt="Isotipo MNIST++">
+        </a>
+        <h1 class="titulo elemento-header">
+          <a href="https://github.com/CS1103/MNISTplusplus#readme" target="_blank">MNIST++</a>
+        <h1>
+    </div>
+
+    <div class="canvas-container">
+        <div class="message">
+            <h2>Draw a number (0-9):</h2>
+        </div>
+        <canvas id="canvas" width="400" height="400"></canvas>
+      </div>
+      <div class="button-container">
+          <button class="button" onclick="convertirAMatriz()">Backpropagation!</button>
+          <button class="button" onclick="limpiarCanvas()">Clear Canvas</button>
+      </div>
+
+      <div id="carga" class="overlay">
+      	<div class="popup">
+      		<h2>MNIST++ cargando...</h2>
+      		<div class="content">
+      			<img src="static\img\isotipo.png" alt="MNIST++ cargando" class="rotating-image">
+      		</div>
+      	</div>
+      </div>
+
+      <div id="popup1" class="overlay">
+      	<div class="popup">
+      		<h2 id="popup-title">Title</h2>
+      		<a class="close" href="#">&times;</a>
+      		<div id="popup-content" class="content">
+      			Content
+      		</div>
+      	</div>
+      </div>
+
+    </div>
+
+    <script src="static\script.js"></script>
+
+</body>
+</html>
