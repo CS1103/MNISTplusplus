@@ -10,5 +10,10 @@ add_executable(Google_Tests_run
                 init/init.cpp
                 matrix/test_matrix.cpp
                 layer/test_layer.cpp
-                network/test_network.cpp dataset/test_dataset.cpp)
+                network/test_network.cpp
+                dataset/test_dataset.cpp
+                mnist_reader/mnist_test.cpp
+                digit_image/digit_image_test.cpp
+                ../src/constants.cpp
+        )
 target_link_libraries(Google_Tests_run gtest gtest_main)
