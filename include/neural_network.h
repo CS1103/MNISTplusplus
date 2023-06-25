@@ -96,9 +96,7 @@ public:
 
         return current_loss;
     }
-    void train_step(DigitImage& image, Matrix<double> y_pred){
 
-    }
     std::vector<neural_layer<double>>& get_layers() {
         return layers;
     }

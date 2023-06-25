@@ -23,13 +23,18 @@ protected:
         mnist_data.load_train_dataset();
         mnist_data.load_test_dataset();
         train_data = mnist_data.get_training_data();
+        training_data_size = train_data.size();
         test_data = mnist_data.get_test_data();
+        test_data_size = test_data.size();
 
         unique_indices.resize(train_data.size());
         std::iota(unique_indices.begin(), unique_indices.end(), 0);
     }
     ~Dataset() {}
 public:
+    size_t training_data_size;
+    size_t test_data_size;
+
     Dataset(Dataset &other) = delete;
     void operator=(const Dataset &) = delete;
     
