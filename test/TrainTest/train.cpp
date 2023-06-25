@@ -7,7 +7,7 @@
 void train(Dataset* dataset){
 
     //Create neural network
-    size_t epochs = 10, batch_size = 30;
+    size_t epochs = 12, batch_size = 30;
     neural_network nn;
     nn.add_layer(784,7);
     nn.add_layer(7,10);
@@ -113,6 +113,6 @@ void test(Dataset* dataset){
 
 int main(){
     Dataset* dataset =  Dataset::GetInstance();
-   // train(dataset);
+    train(dataset);
     test(dataset);
 }
