@@ -6,18 +6,18 @@ TEST(test_layer, test_forward){
     input.randomValues(123);
 
     neural_layer<int> layer(input.get_rows(), 10 );
-    Matrix<int> output = layer.activation(input);
+    std::pair<Matrix<int>,Matrix<int>> output = layer.forward(input);
 
     Matrix<float> input_float (50,1);
     input_float.randomValues(123);
 
     neural_layer<float> layer_float(input_float.get_rows(), 21 );
-    Matrix<float> output_float = layer_float.activation(input_float);
+    std::pair<Matrix<float>, Matrix<float>> output_float = layer_float.forward(input_float);
 
-    ASSERT_EQ(output.get_rows(), 10);
-    ASSERT_EQ(output.get_cols(), 1);
-    ASSERT_EQ(output_float.get_rows(), 21);
-    ASSERT_EQ(output_float.get_cols(), 1);
+    ASSERT_EQ(output.second.get_rows(), 10);
+    ASSERT_EQ(output.second.get_cols(), 1);
+    ASSERT_EQ(output_float.second.get_rows(), 21);
+    ASSERT_EQ(output_float.second.get_cols(), 1);
 
 
 }

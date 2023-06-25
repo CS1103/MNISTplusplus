@@ -59,17 +59,17 @@ public:
     // Forward propagation functions
 
 
-    Matrix<double> relu(Matrix<double>& X){
-        Matrix<double> result(X.get_rows(), X.get_cols());
+    Matrix<T> relu(const Matrix<T>& X){
+        Matrix<T> result(X.get_rows(), X.get_cols());
         for (int i = 0; i < X.get_rows(); ++i) {
             for (int j = 0; j < X.get_cols(); ++j) {
-                result(i,j) = std::max(0.0, X(i,j));
+                result(i,j) = std::max(0.0, (double)X(i,j));
             }
         }
         return result;
     }
-    Matrix<double> relu_prime(Matrix<double>& X){
-        Matrix<double> result(X.get_rows(), X.get_cols());
+    Matrix<T> relu_prime(Matrix<T>& X){
+        Matrix<T> result(X.get_rows(), X.get_cols());
         for (auto i = 0; i < X.get_rows(); ++i) {
             for (auto j = 0; j < X.get_cols(); ++j) {
                 result(i,j) = (X(i,j) > 0.0) ? 1.0 : 0.0;
@@ -78,8 +78,8 @@ public:
         return result;
     }
 
-    Matrix<double> softmax (Matrix<double>& X ){
-        Matrix<double> result((int)X.get_rows(), (int)X.get_cols());
+    Matrix<T> softmax (const Matrix<T>& X ){
+        Matrix<T> result((int)X.get_rows(), (int)X.get_cols());
 
         double sum = 0.0;
         for (auto i = 0; i < X.get_rows(); ++i) {
@@ -96,7 +96,7 @@ public:
         return result;
     }
 
-    std::pair<Matrix<double>,Matrix<double>> forward(Matrix<double>& input, bool is_output = false){
+    std::pair<Matrix<T>,Matrix<T>> forward(const Matrix<T>& input, bool is_output = false){
         auto Z = w.t()*input + b;
         if (is_output){
             return {Z, softmax(Z)};
