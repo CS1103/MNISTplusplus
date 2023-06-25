@@ -42,13 +42,14 @@ add_executable(TrainTest
         include/mnist_loader.h
         include/neural_layer.h
         include/neural_network.h
+        include/utils.h
         src/matrix.cpp
         src/mnist_loader.cpp
         src/neural_layer.cpp
         src/neural_network.cpp
         src/constants.cpp
         test/TrainTest/train.cpp
-        src/constants.cpp)
+        src/utils.cpp)
 
 
 add_subdirectory(Google_tests)
