@@ -18,12 +18,14 @@ public:
 
     MNISTReader()=default;
 
-    void load_dataset(const char* img_path, const char* label_path, bool training = false) {
+    v_images load_dataset(const char* img_path, const char* label_path) {
         std::filesystem::path _img_path = get_absolute_path(img_path);
         std::filesystem::path _label_path = get_absolute_path(label_path);
 
         std::ifstream images_file(_img_path, std::ios::binary);
         std::ifstream labels_file(_label_path, std::ios::binary);
+
+        v_images return_value;
 
         if (images_file.is_open() && labels_file.is_open()) {
             int magic_num, num_rows, num_cols, num_image = read::TRAIN_NUM;
@@ -63,28 +65,25 @@ public:
                 unsigned char label;
                 labels_file.read(reinterpret_cast<char *>(&label), sizeof(label));
                 DigitImage digit_image(mat, label);
-                if (training) {
-                    train_images.emplace_back(digit_image);
-                } else {
-                    test_images.emplace_back(digit_image);
-                }
+
+                return_value.emplace_back(digit_image);
             }
             images_file.close();
             labels_file.close();
         }
         else throw std::runtime_error("Invalid files or filepaths");
+
+        return return_value;
     }
 
     void load_train_dataset(const char* img_path = TRAIN_IMAGE_PATH, const char* label_path = TRAIN_LABEL_PATH) {
-        load_dataset(TRAIN_IMAGE_PATH, TRAIN_LABEL_PATH, true);
+        train_images = load_dataset(TRAIN_IMAGE_PATH, TRAIN_LABEL_PATH);
     }
 
     void load_test_dataset(const char* img_path=TEST_IMAGE_PATH, const char* label_path=TEST_LABEL_PATH){
-        load_dataset(TEST_IMAGE_PATH, TEST_LABEL_PATH, false);
+        test_images = load_dataset(TEST_IMAGE_PATH, TEST_LABEL_PATH);
     }
 
     v_images get_training_data() const {return train_images;}
     v_images get_test_data()  const {return test_images;}
-
-
 };
