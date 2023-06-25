@@ -51,5 +51,11 @@ add_executable(TrainTest
         test/TrainTest/train.cpp
         src/utils.cpp)
 
+add_executable(inference
+        test/inference/inference.cpp
+        include/neural_network.h
+        src/neural_network.cpp
+        include/constants.h
+        src/constants.cpp)
 
 add_subdirectory(Google_tests)
