@@ -19,9 +19,9 @@ public:
     MNISTReader()=default;
 
     void load_dataset(const char* img_path, const char* label_path, bool training = false) {
-        std::filesystem::path  base_path = find_project_root();
-        std::filesystem::path _img_path = base_path /  std::filesystem::path(std::string(img_path));
-        std::filesystem::path _label_path = base_path / std::filesystem::path(std::string(label_path));
+        std::filesystem::path _img_path = get_absolute_path(img_path);
+        std::filesystem::path _label_path = get_absolute_path(label_path);
+
         std::ifstream images_file(_img_path, std::ios::binary);
         std::ifstream labels_file(_label_path, std::ios::binary);
 
