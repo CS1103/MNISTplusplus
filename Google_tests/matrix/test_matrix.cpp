@@ -47,6 +47,7 @@ TEST(MatrixFlattenTest, Flatten) {
     EXPECT_EQ(testflatten2(7,0), 8.0);
     EXPECT_EQ(testflatten2(8,0), 9.0);
 }
+#include <fstream>
 
 TEST(MatrixConstructorTest, ParameterConstructor){
     Matrix<int> m(3, 3);
@@ -319,4 +320,3 @@ TEST(RandomMatrix ,ReplicableRandomness){
     EXPECT_EQ(m3, m4);
 
 }
-
