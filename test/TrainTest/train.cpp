@@ -7,14 +7,16 @@
 void train(Dataset* dataset){
 
     //Create neural network
-    size_t epochs = 12, batch_size = 30;
+    size_t epochs = 100, batch_size = 150;
     neural_network nn;
-    nn.add_layer(784,7);
-    nn.add_layer(7,10);
+    nn.add_layer(784,128);
+    nn.add_layer(128,32);
+    nn.add_layer(32,10);
 
     //Train algorithm
     cout << "Training..." << endl;
     int contador = 0;
+    ;
     for(int i = 0; i < epochs; i++){
         cout << "Epoch: " << i << endl;
         auto batch = dataset->extract_training_batch(batch_size,12);
@@ -28,22 +30,14 @@ void train(Dataset* dataset){
             //Backward + update weights and biases
             nn.backward(digit_image.get_image(), digit_image.get_label());
 
-            for(auto& l: nn.get_layers()){
-                l.gradient_descent(nn.get_learning_rate(), (int)batch_size);
-            }
-
             //Calcula el minimo cuadrado de la matriz de diferencia
-            double error =0;
-            for(int neuron = 0; neuron <10; neuron++ ){
-                error += pow(loss[neuron][0],2);
-            }
-            error_medio += error;
-            if(contador%20 == 0){
-                auto img = digit_image.get_image();
+
+            if(contador%150 == 0){
+                auto img = digit_image.get_label();
                 int max = 0;
                 int real = 0;
                 for(int neuron = 0; neuron <10; neuron++ ){
-                    if(img(neuron,0) > img(max,0))
+                    if(img(neuron,0) ==1 )
                         real = neuron;
                 }
                 for(int neuron =0; neuron<10; neuron++){
@@ -51,23 +45,19 @@ void train(Dataset* dataset){
                         max = neuron;
                 }
 
-
                 cout << std::string(20, '-')<< endl;
                 cout << "Numero Real: "<< real <<"  ||  ";
                 cout << "O.H.E = "<< digit_image.get_label()<<'\n';
                 cout << "Numero Predicho: " << max << endl;
-                //cout << y_pred.back().second << endl;
                 cout << std::string(20, '-')<< endl;
-
             }
-
             contador++;
         }
-        cout << "Error medio: " << error_medio/(int)batch_size << endl;
+        for(auto& l: nn.get_layers()){
+            l.gradient_descent(nn.get_learning_rate(), (int)batch_size);
+        }
     }
-
-
-    nn.serialize("nn.txt");
+    nn.serialize("../Models/trained_100_epch.txt");
 }
 
 void test(Dataset* dataset){
@@ -75,40 +65,40 @@ void test(Dataset* dataset){
     auto testImages = dataset->get_test_data();
 
     neural_network nn;
-    nn.deserialize("nn.txt");
+    nn.deserialize("../Models/trained_100_epch.txt");
 
-    MNISTReader loader;
-    loader.load_test_dataset();
-
-    srand (time(0));
-
+    double correct = 0;
 
     cout << "Testeo de la red neuronal" << endl;
-    for(int i = 0; i<10; i++){
-        int n = rand() % 100;
+    for(int i = 0; i<10000; i++){
 
-        auto img = testImages[n].get_image();
+        auto img = testImages[i].get_image();
         auto resp = nn.inference(img);
 
-        int max = 0;
+
         int real = 0;
         for(int neuron = 0; neuron <10; neuron++ ){
-            if(testImages[n].get_label()[neuron][0] > testImages[n].get_label()[max][0])
+            if(testImages[i].get_label()[neuron][0] == 1) {
                 real = neuron;
+                break;
+            }
         }
-
+        int max = 0;
         for(int neuron =0; neuron<10; neuron++){
             if(resp[neuron][0] > resp[max][0])
                 max = neuron;
         }
 
-        cout << std::string(20, '-') << endl;
-        cout << "Numero Real: " << real << "  ||  ";
-        cout << "O.H.E = " << loader.get_test_data()[n].get_label() << '\n';
-        cout << "Numero Predicho: " << max << endl;
-
+        if (real == max)
+            correct++;
+        if (i%1000 == 0){
+            cout << std::string(20, '-') << endl;
+            cout << "Numero Real: " << real << "  ||  ";
+            cout << "O.H.E = " << testImages[i].get_label() << '\n';
+            cout << "Numero Predicho: " << max << endl;
+        }
     }
-
+    cout << "Porcentaje de acierto: " << (correct/10000.0)*100.0 << "%" << endl;
 }
 
 int main(){

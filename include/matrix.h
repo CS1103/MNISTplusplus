@@ -357,6 +357,15 @@ public:
         return *this;
     }
 
+    Matrix& zeros() {
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                data[i][j] = (T)(0);
+            }
+        }
+        return *this;
+    }
+
     Matrix eye() {
         Matrix result(rows, cols);
         for(int i = 0; i < rows; i++){
