@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 int main(){
-    cout << "Hello World" << endl;
+    std::string texto;
+    std::getline(std::cin, texto);
+    std::cout<< "1";
     return 0;
 }

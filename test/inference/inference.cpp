@@ -4,8 +4,9 @@
 
 #include <iostream>
 #include <fstream>
-#include "neural_network.h"
-#include "constants.h"
+#include "../../include/constants.h"
+
+#include "../../include/neural_network.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -27,5 +28,6 @@ int main(int argc, char* argv[]) {
 
     std::ofstream output_file(outputPath, std::ios::binary);
 //    output_matrix.serialize(output_file);
+    std::cout << "1";
     return 0;
 }
