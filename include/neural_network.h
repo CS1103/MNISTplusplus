@@ -1,8 +1,6 @@
 #ifndef MNISTPLUSPLUS_NEURAL_NETWORK_H
 #define MNISTPLUSPLUS_NEURAL_NETWORK_H
 
-#include "neural_layer.h"
-#include "constants.h"
 #include <ranges>
 #include <cmath>
 #include <utility>
@@ -12,10 +10,15 @@
 #include <sstream>
 #include <initializer_list>
 
+#include "neural_layer.h"
+#include "constants.h"
+#include "utils.h"
+#include "digit_image.h"
+
 class neural_network {
 private:
     std::vector<neural_layer<double>> layers;
-    double learning_rate = 0.01;
+    double learning_rate = 0.0075;
 
 public:
     neural_network() = default;
@@ -30,32 +33,74 @@ public:
         layers.emplace_back(input_size, output_size);
     }
 
-    Matrix<double> forward(Matrix<double> input) {
-        Matrix<double> activation = std::move(input);
-        for (auto& layer : layers) {
-            activation = layer.forward(activation);
-        }
-        return activation;
+    Matrix<double> inference(const Matrix<double>& input) {
+        std::pair<Matrix<double>,Matrix<double> > activation = { Matrix<double>(1,1),std::move(input.flatten())};
+        for (auto& layer : layers)  activation = layer.forward(activation.second);
+        return activation.second;
     }
 
-
-    Matrix<double> backward(Matrix<double>& output, Matrix<double>& target) {
-        Matrix<double> error = output;
-        for(auto it = layers.rbegin(); it != layers.rend(); advance(it,1)){
-            error = it->backward(error, target, learning_rate);
+    Matrix<double> cost ( const Matrix<double>& target, Matrix<double>& prediction){
+        Matrix<double> error(target.get_rows(), target.get_cols());
+        for(int row = 0; row < prediction.get_rows(); row++){
+            for(int col = 0; col < prediction.get_cols(); col++ ){
+                error(row,col) = pow(target(row,col)- prediction(row,col) ,2)/2;
+            }
         }
+
         return error;
+        //return prediction - target  ;
+        //return (prediction - 1 ) ^ mtx_sigmoid_derivative(prediction);
     }
 
-    void train(Matrix<double>& input, Matrix<double>& target, size_t epochs) {
+    std::vector <std::pair<Matrix<double>,Matrix<double>>> forward(const Matrix<double>& input) {
 
+        Matrix<double> activation = input.flatten();
 
-        for (size_t i = 0; i < epochs; ++i) {
-            Matrix<double> output = forward(input);
-            backward(output, target);
+        std::vector <std::pair<Matrix<double>,Matrix<double>>> out = {{ Matrix<double>(1,1),activation}};
+
+        for (auto l=0; l<layers.size(); l++){
+            if(l == layers.size()-1){
+                out.push_back(layers[l].forward(activation, true));
+
+            }else{
+                out.push_back(layers[l].forward(activation));
+                activation = out.back().second;
+            }
         }
+
+        return out;
     }
 
+    Matrix<double> backward(const Matrix<double>& input,const Matrix<double>& label) {
+
+        // Forward
+        std::vector<std::pair<Matrix<double>,Matrix<double>>> out = forward(input);
+
+        // Backward + Gradient descent
+
+        std::vector<Matrix<double>> deltas;
+        Matrix<double> current_loss  = cost(label, out.back().second);
+
+        auto w_ = layers[layers.size()-1].get_w();
+
+        for(int l = (int)layers.size()-1; l >= 0; l--){
+
+            auto &a_ = out[l+1].second;
+
+
+            if(l == layers.size()-1){
+                Matrix<double> last_da = (a_ - label);
+                deltas.insert( deltas.begin(), layers[l].backward_softmax(last_da , out[l].second));
+            }else{
+                deltas.insert(deltas.begin(), layers[l].backward_relu(deltas[0], out[l].second, out[l+1].first));
+            }
+        }
+
+        return current_loss;
+    }
+    void train_step(DigitImage& image, Matrix<double> y_pred){
+
+    }
     std::vector<neural_layer<double>>& get_layers() {
         return layers;
     }
@@ -66,6 +111,10 @@ public:
 
     size_t size() {
         return layers.size();
+    }
+
+    double get_learning_rate() const {
+        return learning_rate;
     }
 
     static std::string trim(std::string &str){
@@ -88,7 +137,6 @@ public:
         str = str.substr(first_char, last_char-first_char+1);
         return str;
     }
-
 
     void serialize(const string& filename){
         ofstream file(filename);
@@ -211,7 +259,7 @@ public:
                             layer[current_layer+1](rows,0) = stod(token);
                         }
                         current_layer += 2;
-                        getline(ss,token,',');
+                        //getline(ss,token,',');
                         if( seps.top() == "{" && trim(token) == "}" || seps.top() == "[" && trim(token) == "]") seps.pop();
 
                     }
