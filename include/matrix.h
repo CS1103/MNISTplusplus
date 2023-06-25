@@ -16,11 +16,11 @@ private:
     size_t cols {};
 public:
 
-    size_t get_rows() const {
+    int get_rows() const {
 	return rows;
     }
 
-    size_t get_cols() const {
+    int get_cols() const {
 	return cols;
     }
 
@@ -183,6 +183,17 @@ public:
         return result;
     }
 
+
+    Matrix operator-(const int& min) const {
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result(i, j) = data[i][j] - min;
+            }
+        }
+        return result;
+    }
+
     Matrix operator*(const Matrix& other) const {
         if (cols != other.rows) {
             throw std::runtime_error("Matrices cannot be multiplied. Incompatible sizes.");
@@ -203,12 +214,38 @@ public:
         return result;
     }
 
+    Matrix operator^(const Matrix& other) const {
+        if (cols != other.cols || rows != other.rows) {
+            throw std::runtime_error("Matrices cannot be multiplied element wise.Dimensions must be equal.");
+        }
+
+        Matrix result(rows, other.cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                result(i, j) = data[i][j] * other(i,j);
+            }
+        }
+        return result;
+    }
+
     template<typename U>
     Matrix operator*(U scalar) const {
         Matrix result(rows, cols);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 result(i, j) = data[i][j] * scalar;
+            }
+        }
+        return result;
+    }
+
+
+    template<typename U>
+    Matrix operator / (U scalar) const {
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result(i, j) = data[i][j] / scalar;
             }
         }
         return result;
@@ -367,7 +404,7 @@ public:
             std::uniform_real_distribution<float> distribution(RANDOM_LOWER_LIMIT,RANDOM_UPPER_LIMIT);
             for (size_t i = 0; i < rows; ++i) {
                 for (size_t j = 0; j < cols; ++j) {
-                    data[i][j] = distribution(gen);
+                    data[i][j] = distribution(gen) -0.5;
                 }
             }
         }

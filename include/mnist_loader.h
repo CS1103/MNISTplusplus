@@ -1,5 +1,7 @@
 #pragma once
 
+#include "digit_image.h"
+#include "matrix.h"
 #include <vector>
 #include <string>
 #include <bit>
