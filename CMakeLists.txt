@@ -58,6 +58,8 @@ add_executable(inference
         include/neural_network.h
         src/neural_network.cpp
         include/constants.h
-        src/constants.cpp)
+        src/constants.cpp
+        include/utils.h
+        src/utils.cpp)
 
 add_subdirectory(Google_tests)

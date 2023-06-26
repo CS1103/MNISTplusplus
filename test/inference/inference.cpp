@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include "neural_network.h"
+#include "utils.h"
 
 int main() {
     neural_network nn;
@@ -20,11 +21,7 @@ int main() {
 
     Matrix<double> output_matrix = nn.inference(input_matrix);
 
-    int max = 0;
-    for (int i = 0; i < output_matrix.get_rows(); i++){
-        if(output_matrix[i][0] > output_matrix[max][0])
-            max = i;
-    }
-    cout << max << endl;
+    pair<int, int> output = argmax(output_matrix);
+    cout << output.first << endl;
     return 0;
 }
