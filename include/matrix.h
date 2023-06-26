@@ -320,23 +320,30 @@ public:
     }
 
     void deserialize(std::istream &input) {
-        for(int i=0; i<rows; i++)
-            delete [] data[i];
-        delete [] data;
+        // Leer las dimensiones de la matriz
+        int filas, columnas;
+        input.read(reinterpret_cast<char*>(&filas), sizeof(filas));
+        input.read(reinterpret_cast<char*>(&columnas), sizeof(columnas));
 
-        input.read((char*)&rows, sizeof(rows));
-        input.read((char*)&cols, sizeof(cols));
+        // Comprobar los valores de las dimensiones
+        if (filas <= 0 || columnas <= 0) {
+            std::cerr << "Dimensiones de la matriz no válidas." << std::endl;
+        }
 
-        data = new T*[rows];
-        for(int i=0; i<rows; i++)
-            data[i] = new T[cols];
+        // Crear un objeto Matrix con las dimensiones leídas
+        Matrix<int> matriz(filas, columnas);
 
-        for(int i=0; i<rows; i++){
-            for(int j=0; j<cols; j++){
-                input.read((char*)&data[i][j], sizeof(T));
+
+        for (int i = 0; i < filas; i++) {
+            data[i] = new T[columnas];
+            for (int j = 0; j < columnas; j++) {
+                int value;
+                input.read(reinterpret_cast<char*>(&value), sizeof(int));
+                data[i][j] = value;
             }
         }
     }
+
 
     Matrix t() const {
         Matrix result(cols, rows);

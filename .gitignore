@@ -34,4 +34,4 @@
 build/
 .idea/
 cmake-build-debug/
-matrix.bin
+cmake-build-debug/matrix.bin
