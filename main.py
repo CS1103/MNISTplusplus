@@ -21,23 +21,32 @@ def index():
 
 @app.route("/backpropagation", methods=['POST'])
 def backpropagation():
-    matrix = request.get_json()['matriz']
+    response = {"answer": "ERROR"}
+    try:
+        matrix = request.get_json()['matriz']
 
-    with open('cmake-build-debug/matrix.bin', 'wb') as file:
-        rows = len(matrix)
-        columns = len(matrix[0])
-        file.write(struct.pack('ii', rows, columns))
-        for f in matrix:
-            for element in f:
-                file.write(struct.pack('i', element))
+        with open('cmake-build-debug/matrix.bin', 'wb') as file:
+            rows = len(matrix)
+            columns = len(matrix[0])
+            file.write(struct.pack('ii', rows, columns))
+            for f in matrix:
+                for element in f:
+                    file.write(struct.pack('i', element))
 
+        result = subprocess.run(
+            ["./cmake-build-debug/inference"],
+            text=True,
+            capture_output=True
+        )
+        print(result)
+        if result.returncode != 0:
+            raise IOError("Return Code is not 0")
+        else:
+            response["answer"] = result.stdout
+    except Exception as e:
+        print(e)
+        response["answer"] = "ERROR"
 
-    result = subprocess.run(
-        ["./cmake-build-debug/inference"],
-        text=True,
-        capture_output=True
-    )
-    response = {"answer": "1"}#result.stdout
     return jsonify(response)
 
 
