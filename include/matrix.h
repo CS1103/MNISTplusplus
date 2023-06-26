@@ -320,19 +320,18 @@ public:
     }
 
     void deserialize(std::istream &input) {
-        // Leer las dimensiones de la matriz
+        // Read the matrix dimensions
         int filas, columnas;
         input.read(reinterpret_cast<char*>(&filas), sizeof(filas));
         input.read(reinterpret_cast<char*>(&columnas), sizeof(columnas));
 
-        // Comprobar los valores de las dimensiones
+        // Check the values of the dimensions
         if (filas <= 0 || columnas <= 0) {
             std::cerr << "Dimensiones de la matriz no válidas." << std::endl;
         }
 
-        // Crear un objeto Matrix con las dimensiones leídas
+        // Create matrix object with dimensions
         Matrix<int> matriz(filas, columnas);
-
 
         for (int i = 0; i < filas; i++) {
             data[i] = new T[columnas];
