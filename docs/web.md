@@ -65,4 +65,3 @@ The website allows you to draw a number on the canvas and click the "Back propag
 Note: Make sure to adjust the file paths and configurations according to your project structure.
 
 This concludes the MNIST++ website documentation. You can now deploy and use the website to interact with the MNIST++ neural network model.
-
