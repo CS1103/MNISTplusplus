@@ -51,7 +51,7 @@ add_executable(TrainTest
         src/neural_network.cpp
         src/constants.cpp
         test/TrainTest/train.cpp
-        src/utils.cpp include/confution_matrix.h)
+        src/utils.cpp)
 
 add_executable(inference
         test/inference/inference.cpp
