@@ -99,9 +99,7 @@ The `neural_layer` class provides the following functionality:
     - `std::pair<Matrix<T>, Matrix<T>> forward(const Matrix<T>& input, bool is_output = false)`: Performs forward propagation for the given input matrix `input`. Returns a pair containing the matrix `Z` (the weighted sum of inputs) and the activation matrix `A`. If `is_output` is `true`, the softmax activation function is applied to `Z` and returned as `A`, otherwise the ReLU activation function is applied.
 
 - Backward propagation functions:
-    - `Matrix<double> backward_relu(Matrix<T>& delta, const Matrix<T>& prev_A, Matrix
-
-<T>& prev_Z)`: Performs backward propagation for the ReLU activation function. Updates the weight matrix `dw` and bias matrix `db`. Returns the gradient of the previous layer.
+    - `Matrix<double> backward_relu(Matrix<T>& delta, const Matrix<T>& prev_A, Matrix<T>& prev_Z)`: Performs backward propagation for the ReLU activation function. Updates the weight matrix `dw` and bias matrix `db`. Returns the gradient of the previous layer.
 - `Matrix<double> backward_softmax(Matrix<double>& delta, Matrix<double>& prev_output)`: Performs backward propagation for the softmax activation function. Updates the weight matrix `dw` and bias matrix `db`. Returns the gradient of the previous layer.
 
 - Gradient descent:
