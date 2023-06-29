@@ -17,13 +17,13 @@ We share with you our presentation: https://www.beautiful.ai/player/-NWtcsAmPmBl
 | Jonathan Quilca Valenzuela | jonathan.quilca@utec.edu.pe | [jonyyy1](https://github.com/jonyyy1) |
 | Arturo Barrantes | arturo.barrantes@utec.edu.pe | [arturombc](https://github.com/arturombc) |
 
-## Documentation 📚📄
+## Wiki 📚📄
 
-The `/docs` directory contains detailed documentation for the project, including instructions, diagrams, a video presentation, features, and an installation guide. Please refer to the individual files for more information.
+Please check out the [Wiki](https://github.com/CS1103/MNISTplusplus/wiki) for specific documentation of the project and its functionalities. In case you want to access information more quickly, the `/docs` directory contains detailed documentation for the code.
 
 ## Installation 💻🔧
 
-For instructions on installing and running the project, please refer to the `/docs/installation_guide.md` file.
+For instructions on installing and running the project, please refer to the `/wiki/web` section.
 
 ## Dataset 📊📂
 
