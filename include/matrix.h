@@ -16,11 +16,11 @@ private:
     size_t cols {};
 public:
 
-    int get_rows() const {
+    size_t get_rows() const {
 	return rows;
     }
 
-    int get_cols() const {
+    size_t get_cols() const {
 	return cols;
     }
 
