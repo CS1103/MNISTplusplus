@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "digit_image.h"
+#include "utils.h"
 
 TEST(DigitImageTest, ConstructorTest) {
     Matrix<double> imgData(28, 28);
