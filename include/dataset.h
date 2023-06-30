@@ -1,6 +1,7 @@
 #pragma once
 
 #include "constants.h"
+#include "utils.h"
 #include "mnist_loader.h"
 #include "matrix.h"
 #include <algorithm>

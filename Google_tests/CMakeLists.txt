@@ -15,5 +15,6 @@ add_executable(Google_Tests_run
                 mnist_reader/mnist_test.cpp
                 digit_image/digit_image_test.cpp
                 ../src/constants.cpp
+                ../src/utils.cpp
         )
 target_link_libraries(Google_Tests_run gtest gtest_main)
