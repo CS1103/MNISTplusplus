@@ -1,5 +1,6 @@
 #include "../../include/mnist_loader.h"
 #include "constants.h"
+#include "utils.h"
 #include <iostream>
 #include <time.h>
 
