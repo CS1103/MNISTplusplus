@@ -102,12 +102,18 @@ void test(){
         }
         recall[j] = confusion_matrix[j][j] / (double) sum;
     }
+
+    vector<double> f1(10);
+    for (int j = 0; j < 10; j++) {
+        f1[j] = 2 * (precision[j] * recall[j]) / (precision[j] + recall[j]);
+    }
+
     cout << "\n------ Validation Results ------\n" << endl;
 
-    cout << "\n| Class | Precision | Recall |\n";
-    cout << "|------:|----------:|-------:|\n";
+    cout << "\n| Class | Precision | Recall | F1-score |\n";
+    cout << "|------:|----------:|-------:|---------:|\n";
     for (int j = 0; j < 10; j++) {
-        cout << "| " << setw(5) << j << " | " << setw(9) << setprecision(4) << precision[j] << " | " << setw(6) << setprecision(4) << recall[j] << " |\n";
+        cout << "| " << setw(5) << j << " | " << setw(9) << setprecision(4) << precision[j] << " | " << setw(6) << setprecision(4) << recall[j] << " | " << setw(8) << setprecision(4) << f1[j] << " |\n";
     }
     cout << "\n";
 

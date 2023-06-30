@@ -9,6 +9,7 @@
 #include <fstream>
 #include "digit_image.h"
 #include "constants.h"
+#include "utils.h"
 
 
 class MNISTReader {
