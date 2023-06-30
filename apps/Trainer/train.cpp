@@ -71,7 +71,7 @@ void test(){
 
     Matrix<double> confusion_matrix(10,10);
     double correct = 0;
-    cout << "Testeo de la red neuronal" << endl;
+    cout << "Validating neural network" << endl;
     for(int i = 0; i<dataset->test_data_size; i++) {
 
         auto img = testImages[i].get_image();
@@ -85,36 +85,60 @@ void test(){
             correct++;
         confusion_matrix[ground_truth][predicted]++;
 
-
-        vector<double> precision(10);
-        for (int j = 0; j < 10; j++) {
-            precision[j] = confusion_matrix[j][j] / (double) dataset->test_data_size;
-        }
-
-        vector<double> recall(10);
-        for (int j = 0; j < 10; j++) {
-            double sum = 0;
-            for (int k = 0; k < 10; k++) {
-                sum += confusion_matrix[j][k];
-            }
-            recall[j] = confusion_matrix[j][j] / sum;
-        }
-        cout << "Precision: " << endl;
-        for (int j = 0; j < 10; j++) {
-            cout << "Digit " << j << ": " << precision[j] << endl;
-        }
-        cout << "Recall: " << endl;
-        for (int j = 0; j < 10; j++) {
-            cout << "Digit " << j << ": " << recall[j] << endl;
-        }
     }
-    for(int i = 0; i<10; i++){
-        cout << "Accuracy of digit " << i << ": " << (confusion_matrix(0,0)/(double)dataset->test_data_size)*100.0 << "%" << endl;
+    vector<double> precision(10);
+    for (int j = 0; j < 10; j++) {
+        double sum = 0;
+        for (int k = 0; k < 10; k++) {
+            sum += confusion_matrix[k][j];
+        }
+        precision[j] = confusion_matrix[j][j] / (double) sum;
     }
-    cout << endl << "Accuracy of the network: " << (correct/(double)dataset->test_data_size)*100.0 << "%" << endl;
-    cout << "Confusion matrix: " << endl;
-    cout << confusion_matrix << endl;
 
+    vector<double> recall(10);
+    for (int j = 0; j < 10; j++) {
+        double sum = 0;
+        for (int k = 0; k < 10; k++) {
+            sum += confusion_matrix[j][k];
+        }
+        recall[j] = confusion_matrix[j][j] / (double) sum;
+    }
+    cout << "\n------ Validation Results ------\n" << endl;
+
+    cout << "\n| Class | Precision | Recall |\n";
+    cout << "|------:|----------:|-------:|\n";
+    for (int j = 0; j < 10; j++) {
+        cout << "| " << setw(5) << j << " | " << setw(9) << setprecision(4) << precision[j] << " | " << setw(6) << setprecision(4) << recall[j] << " |\n";
+    }
+    cout << "\n";
+
+
+    cout << "\n------ Overall Network Performance ------\n" << endl;
+    cout << "Total Accuracy of the Network: " << setprecision(4) << (correct / dataset->test_data_size) * 100.0 << "%" << endl;
+
+    cout << "\nConfusion Matrix: " << endl;
+
+    cout << "|      ";
+    for(int j = 0; j < 10; j++){
+        cout << "| " << std::setw(3) << "C" << j << " ";
+    }
+    cout << "|\n";
+
+    cout << "|------";
+    for(int j = 0; j < 10; j++){
+        cout << "|------";
+    }
+    cout << "|\n";
+
+    for (int i = 0; i < confusion_matrix.get_rows(); ++i) {
+        cout << "| " << std::setw(3) << "C" << i << " ";
+
+        for (int j = 0; j < confusion_matrix.get_cols(); ++j) {
+            cout << "| " << std::setw(4) << confusion_matrix(i, j) << " ";
+        }
+        cout << "|\n";
+    }
+    cout << "\n----------------------------------------\n" << endl;
 }
 
 int main(){
