@@ -20,6 +20,7 @@ add_executable(mnistReader
         include/neural_layer.h
         include/neural_network.h
         include/digit_image.h
+        include/utils.h
         src/matrix.cpp
         src/mnist_loader.cpp
         src/neural_layer.cpp
@@ -28,7 +29,8 @@ add_executable(mnistReader
         src/constants.cpp
         apps/MNISTReader/test_reader.cpp
         src/constants.cpp
-        src/dataset.cpp)
+        src/dataset.cpp
+        src/utils.cpp)
 
 add_executable(Trainer
         include/constants.h

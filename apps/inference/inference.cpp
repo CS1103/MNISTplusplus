@@ -6,7 +6,7 @@
 
 int main() {
     neural_network nn;
-    std::filesystem::path model_full_path = get_absolute_path("models/trained_100_epch.txt");
+    std::filesystem::path model_full_path = get_absolute_path("models/trained_9178_epch.txt");
     nn.deserialize(model_full_path.string());
 
     Matrix<double> input_matrix(28, 28);
