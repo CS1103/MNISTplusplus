@@ -9,11 +9,10 @@ void train(){
     //Create neural network
     Dataset* dataset =  Dataset::GetInstance();
 
-    size_t epochs = 100, batch_size = 150;
+    size_t epochs = 250, batch_size = 320;
     neural_network nn;
-    nn.add_layer(784,128);
-    nn.add_layer(128,32);
-    nn.add_layer(32,10);
+    nn.add_layer(784,64);
+    nn.add_layer(64,10);
 
     //Train algorithm
     cout << "Training..." << endl;
@@ -57,7 +56,7 @@ void train(){
             l.gradient_descent(nn.get_learning_rate(), (int)batch_size);
         }
     }
-    nn.serialize("../models/trained_100_epch.txt");
+    nn.serialize("../models/trained_9141_epch.txt");
 }
 
 void test(){
@@ -142,6 +141,6 @@ void test(){
 }
 
 int main(){
-    //train();
-    test();
+    train();
+    //test();
 }

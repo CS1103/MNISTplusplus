@@ -18,8 +18,7 @@
 class neural_network {
 private:
     std::vector<neural_layer<double>> layers;
-    double learning_rate = 0.4;
-    Matrix<int> cm = Matrix<int>(10,10);
+    double learning_rate = 0.52093;
 public:
     neural_network() = default;
 
@@ -265,33 +264,6 @@ public:
         for(int i = 0; i < layer.size(); i+=2)
             layers.emplace_back(sizes[i], sizes[i+1], layer[i], layer[i+1]);
     }
-/*
-    Matrix<int> confusion_matrix(Matrix<double>& data, Matrix<int>& labels){
-        Matrix<int> conf(10, 10);
-        for(int i = 0; i < data.get_rows(); i++){
-            int label = predict(data.slice(pair<int, int>(i, 0), pair<int, int>(i, 783)));
-            conf(labels(i, 0), label)++;
-        }
-        return conf;
-    }
-
-    double precision(int label){
-        Matrix<int> conf = confusion_matrix(test_data, test_labels);
-        return precision(label, conf);
-    }
-
-    double recall(int label, Matrix<int>& conf){
-        Matrix<int> row = conf.slice(pair<int, int>(label, 0), pair<int, int>(label, 9));
-        int true_positives = conf(label, label);
-        int false_negatives = row.sum() - true_positives;
-
-        if (true_positives + false_negatives == 0) {
-            return 0.0;
-        } else {
-            return static_cast<double>(true_positives) / (true_positives + false_negatives);
-        }
-    }
-    */
 };
 
 

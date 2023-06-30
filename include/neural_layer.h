@@ -131,6 +131,9 @@ public:
     void gradient_descent( double learning_rate, int batch_size){
         dw = (dw/batch_size);
         db = (db/batch_size);
+
+        dw += (w*0.0008);
+
         w-= dw*learning_rate;
         b-= db*learning_rate;
     }
