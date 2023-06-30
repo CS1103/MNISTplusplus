@@ -265,7 +265,7 @@ public:
         for(int i = 0; i < layer.size(); i+=2)
             layers.emplace_back(sizes[i], sizes[i+1], layer[i], layer[i+1]);
     }
-
+/*
     Matrix<int> confusion_matrix(Matrix<double>& data, Matrix<int>& labels){
         Matrix<int> conf(10, 10);
         for(int i = 0; i < data.get_rows(); i++){
@@ -291,6 +291,7 @@ public:
             return static_cast<double>(true_positives) / (true_positives + false_negatives);
         }
     }
+    */
 };
 
 

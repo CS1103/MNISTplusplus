@@ -68,10 +68,11 @@ void test(){
     neural_network nn;
     nn.deserialize("../models/trained_100_epch.txt");
 
-    double correct = 0;
 
+    Matrix<double> confusion_matrix(10,10);
+    double correct = 0;
     cout << "Testeo de la red neuronal" << endl;
-    for(int i = 0; i<dataset->test_data_size; i++){
+    for(int i = 0; i<dataset->test_data_size; i++) {
 
         auto img = testImages[i].get_image();
         auto resp = nn.inference(img);
@@ -82,14 +83,38 @@ void test(){
 
         if (ground_truth == predicted)
             correct++;
-        if (i%1000 == 0){
-            cout << std::string(20, '-') << endl;
-            cout << "Ground truth: " << ground_truth << "  ||  ";
-            cout << "O.H.E = " << testImages[i].get_label() << '\n';
-            cout << "Predicted: " << predicted << endl;
+        confusion_matrix[ground_truth][predicted]++;
+
+
+        vector<double> precision(10);
+        for (int j = 0; j < 10; j++) {
+            precision[j] = confusion_matrix[j][j] / (double) dataset->test_data_size;
+        }
+
+        vector<double> recall(10);
+        for (int j = 0; j < 10; j++) {
+            double sum = 0;
+            for (int k = 0; k < 10; k++) {
+                sum += confusion_matrix[j][k];
+            }
+            recall[j] = confusion_matrix[j][j] / sum;
+        }
+        cout << "Precision: " << endl;
+        for (int j = 0; j < 10; j++) {
+            cout << "Digit " << j << ": " << precision[j] << endl;
+        }
+        cout << "Recall: " << endl;
+        for (int j = 0; j < 10; j++) {
+            cout << "Digit " << j << ": " << recall[j] << endl;
         }
     }
-    cout << "Accuracy: " << (correct/(double)dataset->test_data_size)*100.0 << "%" << endl;
+    for(int i = 0; i<10; i++){
+        cout << "Accuracy of digit " << i << ": " << (confusion_matrix(0,0)/(double)dataset->test_data_size)*100.0 << "%" << endl;
+    }
+    cout << endl << "Accuracy of the network: " << (correct/(double)dataset->test_data_size)*100.0 << "%" << endl;
+    cout << "Confusion matrix: " << endl;
+    cout << confusion_matrix << endl;
+
 }
 
 int main(){
