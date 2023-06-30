@@ -56,7 +56,7 @@ void train(){
             l.gradient_descent(nn.get_learning_rate(), (int)batch_size);
         }
     }
-    nn.serialize("../models/trained_9141_epch.txt");
+    nn.serialize("../models/trained_9178_epch.txt");
 }
 
 void test(){
@@ -65,7 +65,7 @@ void test(){
     auto testImages = dataset->get_test_data();
 
     neural_network nn;
-    nn.deserialize("../models/trained_100_epch.txt");
+    nn.deserialize("../models/trained_9178_epch.txt");
 
 
     Matrix<double> confusion_matrix(10,10);
@@ -141,6 +141,6 @@ void test(){
 }
 
 int main(){
-    train();
-    //test();
+    //train();
+    test();
 }
