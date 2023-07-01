@@ -13,6 +13,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           style: file
+          files-changed-only: false
           directory: 'src include'  # The line you'd add
 
       - name: Fail fast?!
